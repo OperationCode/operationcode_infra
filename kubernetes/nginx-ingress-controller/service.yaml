@@ -17,4 +17,4 @@ spec:
   - port: 443
     name: https
   selector:
-    app: nginx
+    app: ingress-nginx
