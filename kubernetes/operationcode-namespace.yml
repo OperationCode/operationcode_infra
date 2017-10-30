@@ -11,3 +11,10 @@ metadata:
   name: operationcode-staging
   labels:
     name: operationcode-staging
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: ingress-nginx
+  labels:
+    name: ingress-nginx
