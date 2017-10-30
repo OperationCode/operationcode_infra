@@ -18,3 +18,10 @@ metadata:
   name: ingress-nginx
   labels:
     name: ingress-nginx
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: kube-lego
+  labels:
+    name: kube-lego
