@@ -8,7 +8,7 @@ Check out [how Operation Code Open Source projects are maintained](https://githu
 
 * [Matthew Walter](https://github.com/ohaiwalt)
 
-# Lieutenant
+# Sergeant
 
 * [Nell Shamrell-Harrington](http://www.github.com/nellshamrell)
 
