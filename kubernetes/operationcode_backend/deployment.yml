@@ -23,7 +23,7 @@ spec:
               name: backend-secrets
               key: postgres_password
         - name: POSTGRES_HOST
-          value: operationcode-staging-psql-postgresql
+          value: prod-postgres-20180107.czwauqf3tjaz.us-east-2.rds.amazonaws.com
         - name: REDIS_URL
           value: redis://operationcode-redis-redis:6379/0
         - name: RAILS_ENV
