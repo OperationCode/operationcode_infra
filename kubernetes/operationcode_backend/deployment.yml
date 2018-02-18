@@ -48,6 +48,11 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: secret_key_base
+        - name: SKYLIGHT_AUTHENTICATION
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: skylight_authentication
         volumeMounts:
         - name: backend-secrets
           mountPath: /run/secrets
@@ -87,11 +92,6 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: secret_key_base
-        - name: SKYLIGHT_AUTHENTICATION
-          valueFrom:
-            secretKeyRef:
-              name: backend-secrets
-              key: skylight_authentication
         volumeMounts:
         - name: backend-secrets
           mountPath: /run/secrets
