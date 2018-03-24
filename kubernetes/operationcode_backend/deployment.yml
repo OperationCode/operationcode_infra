@@ -22,6 +22,16 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: postgres_password
+        - name: FOREST_AUTH_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: forest_auth_secret
+        - name: FOREST_ENV_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: forest_env_secret
         - name: POSTGRES_HOST
           value: prod-postgres-20180107.czwauqf3tjaz.us-east-2.rds.amazonaws.com
         - name: REDIS_URL
