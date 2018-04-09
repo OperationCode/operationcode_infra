@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  name: operationcode-backend
+  namespace: operationcode-staging
+spec:
+  rules:
+  - host: api.staging.operationcode.org
+    http:
+      paths:
+      - backend:
+          serviceName: operationcode-backend-service
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - api.staging.operationcode.org
+    secretName: operationcode-backend-tls
