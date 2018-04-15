@@ -33,9 +33,9 @@ spec:
               name: backend-secrets
               key: forest_env_secret
         - name: POSTGRES_HOST
-          value: prod-postgres-20180107.czwauqf3tjaz.us-east-2.rds.amazonaws.com
+          value: opcode-postgres
         - name: REDIS_URL
-          value: redis://operationcode-redis-redis:6379/0
+          value: redis://opcode-redis:6379/0
         - name: RAILS_ENV
           value: production
         - name: SLACK_SUBDOMAIN
@@ -77,9 +77,9 @@ spec:
               name: backend-secrets
               key: postgres_password
         - name: POSTGRES_HOST
-          value: operationcode-staging-psql-postgresql
+          value: opcode-postgres
         - name: REDIS_URL
-          value: redis://operationcode-redis-redis:6379/0
+          value: redis://opcode-redis:6379/0
         - name: SLACK_SUBDOMAIN
           valueFrom:
             secretKeyRef:
