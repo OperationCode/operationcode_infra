@@ -59,4 +59,5 @@ $HELM init
 $HELM install --name operationcode-psql stable/postgresql --set postgresPassword=$POSTGRES_PASSWORD
 
 ## Backend Redis
-$HELM install --name operationcode-redis stable/redis --set usePassword=false
+$HELM install --name operationcode-redis stable/redis --version 0.10.2 --set usePassword=false
+$HELM install --name operationcode-staging-redis --namespace operationcode-staging stable/redis --version 0.10.2 --set usePassword=false
