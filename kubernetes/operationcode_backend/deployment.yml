@@ -32,11 +32,6 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: forest_env_secret
-        - name: PY_BOT_AUTH_KEY
-          valueFrom:
-            secretKeyRef:
-              name: backend-secrets
-              key: py_bot_auth_key
         - name: POSTGRES_HOST
           value: opcode-postgres
         - name: REDIS_URL
