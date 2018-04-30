@@ -32,6 +32,16 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: forest_env_secret
+        - name: GIT_HUB_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: git_hub_client_id
+        - name: GIT_HUB_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: git_hub_client_secret
         - name: PY_BOT_AUTH_KEY
           valueFrom:
             secretKeyRef:
