@@ -22,16 +22,6 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: postgres_password
-        - name: FOREST_AUTH_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: backend-secrets
-              key: forest_auth_secret
-        - name: FOREST_ENV_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: backend-secrets
-              key: forest_env_secret
         - name: GIT_HUB_CLIENT_ID
           valueFrom:
             secretKeyRef:
