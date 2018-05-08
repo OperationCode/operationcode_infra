@@ -32,6 +32,11 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: git_hub_client_secret
+        - name: GIT_HUB_OAUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: git_hub_oauth_token
         - name: PY_BOT_AUTH_KEY
           valueFrom:
             secretKeyRef:
