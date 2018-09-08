@@ -10,12 +10,8 @@ Greetings! Much of Operation Code's web site runs in a [Kubernetes](https://kube
 
 ## Installing the Kubernetes Command Line
 
-This is what you will use to interact with our Kubernetes cluster - where both the front end and back end of the site runs. If you have not already, install the [Homebrew Package Manager](https://brew.sh/), then run:
+This is what you will use to interact with our Kubernetes cluster - where both the front end and back end of the site runs. If you have not already, install the [Homebrew Package Manager](https://brew.sh/), then follow [these instructions](https://www.benpickles.com/articles/72-downgrading-kubectl-with-homebrew) in order to install kubectl@1.8.4 (the version currently running on our server).
 
-* Install the Kubernetes command line
-```bash
-$ brew install kubectl
-```
 ## Authenticating to the Operation Code Kubernetes Cluster
 
 You will use your email@operationcode.org gmail account to authenticate to our cluster. We use a helper to do this - the k8s-oidc-helper.  This helper is written in go - and to use it, we'll need to install the go language and create some configuration.
