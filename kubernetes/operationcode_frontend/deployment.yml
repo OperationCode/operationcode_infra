@@ -21,5 +21,11 @@ spec:
           value: production
         - name: GA_TRACKER_ID
           value: UA-75642413-1
+        - name: OC_API_URL
+          value: https://api.operationcode.org/api/v1
         ports:
         - containerPort: 4000
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
