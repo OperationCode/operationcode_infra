@@ -11,20 +11,22 @@ spec:
         app: operationcode-frontend
     spec:
       containers:
-      - name: app
-        image: operationcode/operationcode_frontend:latest
-        imagePullPolicy: Always
-        env:
-        - name: PORT
-          value: "4000"
-        - name: NODE_ENV
-          value: production
-        - name: GA_TRACKER_ID
-          value: UA-75642413-1
-        - name: OC_API_URL
-          value: https://api.operationcode.org/api/v1
-        ports:
-        - containerPort: 4000
+        - name: app
+          image: operationcode/operationcode_frontend:latest
+          imagePullPolicy: Always
+          env:
+            - name: PORT
+              value: '4000'
+            - name: NODE_ENV
+              value: production
+            - name: GA_TRACKER_ID
+              value: UA-75642413-1
+            - name: OC_API_URL
+              value: https://api.operationcode.org/api/v1
+            - name: OC_BACKEND_HOST
+              value: https://api.operationcode.org/
+          ports:
+            - containerPort: 4000
 resources:
   requests:
     cpu: 100m
