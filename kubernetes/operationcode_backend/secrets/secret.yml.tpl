@@ -9,6 +9,7 @@ data:
   airtable_api_key: SECRET
   jwt_secret_key: SECRET
   postgres_password: SECRET
+  postgres_user: SECRET
   secret_key_base: SECRET
   sendgrid_password: SECRET
   sendgrid_username: SECRET
