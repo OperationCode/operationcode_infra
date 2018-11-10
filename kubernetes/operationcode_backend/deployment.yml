@@ -78,11 +78,6 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: slack_subdomain
-        - name: SLACK_LEGACY_ADMIN_TOKEN 
-          valueFrom:
-            secretKeyRef:
-              name: backend-secrets
-              key: slack_legacy_admin_token 
         - name: SLACK_TOKEN
           valueFrom:
             secretKeyRef:
@@ -130,6 +125,11 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: slack_subdomain
+        - name: SLACK_LEGACY_ADMIN_TOKEN 
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: slack_legacy_admin_token 
         - name: SLACK_TOKEN
           valueFrom:
             secretKeyRef:
