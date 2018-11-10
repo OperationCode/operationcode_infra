@@ -58,6 +58,11 @@ spec:
           value: redis://opcode-redis:6379/0
         - name: RAILS_ENV
           value: production
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: postgres_user
         - name: SLACK_SUBDOMAIN
           valueFrom:
             secretKeyRef:
