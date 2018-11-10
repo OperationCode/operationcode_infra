@@ -5,6 +5,7 @@ metadata:
 type: Opaque
 data:
   airtable_add_user_base_id: SECRET
+  airtable_base_id: SECRET
   airtable_add_user_table_name: SECRET
   airtable_api_key: SECRET
   jwt_secret_key: SECRET
