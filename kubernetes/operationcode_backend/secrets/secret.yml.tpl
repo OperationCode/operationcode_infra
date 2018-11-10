@@ -11,6 +11,7 @@ data:
   postgres_password: SECRET
   postgres_user: SECRET
   secret_key_base: SECRET
+  slack_legacy_admin_token: SECRET
   sendgrid_password: SECRET
   sendgrid_username: SECRET
   sendgrid_api_key: SECRET

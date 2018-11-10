@@ -27,6 +27,11 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: airtable_api_key
+        - name: SLACK_LEGACY_ADMIN_TOKEN 
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: slack_legacy_admin_token 
         - name: AIRTABLE_BASE_ID
           valueFrom:
             secretKeyRef:
