@@ -5,3 +5,6 @@ namespace: ingress-nginx
 
 bases:
 - ../../base
+
+patchesStrategicMerge:
+- deployment.yaml
