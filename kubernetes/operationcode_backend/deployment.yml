@@ -98,6 +98,16 @@ spec:
             secretKeyRef:
               key: sentry_credentials
               name: backend-secrets
+        - name: SENDGRID_PASSWORD 
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: sendgrid_password 
+        - name: SENDGRID_USERNAME 
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: sendgrid_username 
         - name: SLACK_SERVICE_AUTH_TOKEN
           valueFrom:
             secretKeyRef:
