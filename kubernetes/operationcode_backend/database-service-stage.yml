@@ -1,8 +1,0 @@
-kind: Service
-apiVersion: v1
-metadata:
-  name: opcode-postgres
-  namespace: operationcode-staging
-spec:
-  type: ExternalName
-  externalName: staging-postgres-20180408.czwauqf3tjaz.us-east-2.rds.amazonaws.com
