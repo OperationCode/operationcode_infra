@@ -5,11 +5,14 @@ metadata:
 type: Opaque
 data:
   airtable_add_user_base_id: SECRET
+  airtable_base_id: SECRET
   airtable_add_user_table_name: SECRET
   airtable_api_key: SECRET
   jwt_secret_key: SECRET
   postgres_password: SECRET
+  postgres_user: SECRET
   secret_key_base: SECRET
+  slack_legacy_admin_token: SECRET
   sendgrid_password: SECRET
   sendgrid_username: SECRET
   sendgrid_api_key: SECRET

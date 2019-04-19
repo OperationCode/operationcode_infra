@@ -27,37 +27,52 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: airtable_api_key
+        - name: SLACK_LEGACY_ADMIN_TOKEN 
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: slack_legacy_admin_token 
         - name: AIRTABLE_BASE_ID
           valueFrom:
             secretKeyRef:
               name: backend-secrets
               key: airtable_base_id
+              optional: true
         - name: GIT_HUB_CLIENT_ID
           valueFrom:
             secretKeyRef:
               name: backend-secrets
               key: git_hub_client_id
+              optional: true
         - name: GIT_HUB_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               name: backend-secrets
               key: git_hub_client_secret
+              optional: true
         - name: GIT_HUB_OAUTH_TOKEN
           valueFrom:
             secretKeyRef:
               name: backend-secrets
               key: git_hub_oauth_token
+              optional: true
         - name: PY_BOT_AUTH_KEY
           valueFrom:
             secretKeyRef:
               name: backend-secrets
               key: py_bot_auth_key
+              optional: true
         - name: POSTGRES_HOST
           value: opcode-postgres
         - name: REDIS_URL
           value: redis://opcode-redis:6379/0
         - name: RAILS_ENV
           value: production
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: postgres_user
         - name: SLACK_SUBDOMAIN
           valueFrom:
             secretKeyRef:
@@ -96,6 +111,11 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: postgres_password
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: postgres_user
         - name: POSTGRES_HOST
           value: opcode-postgres
         - name: REDIS_URL
@@ -105,6 +125,11 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: slack_subdomain
+        - name: SLACK_LEGACY_ADMIN_TOKEN 
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: slack_legacy_admin_token 
         - name: SLACK_TOKEN
           valueFrom:
             secretKeyRef:
