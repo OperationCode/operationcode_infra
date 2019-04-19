@@ -9,5 +9,4 @@ data:
   server-name-hash-bucket-size: "256"
 kind: ConfigMap
 metadata:
-  namespace: ingress-nginx
   name: nginx-configuration
