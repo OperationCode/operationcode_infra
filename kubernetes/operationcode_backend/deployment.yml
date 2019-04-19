@@ -98,6 +98,16 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: skylight_authentication
+        - name: SENTRY_CREDENTIALS
+          valueFrom:
+            secretKeyRef:
+              key: sentry_credentials
+              name: backend-secrets
+        - name: SLACK_SERVICE_AUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: slack_service_auth_token
+              name: backend-secrets   
         volumeMounts:
         - name: backend-secrets
           mountPath: /run/secrets
@@ -137,6 +147,16 @@ spec:
               key: slack_token
         - name: RAILS_ENV
           value: production
+        - name: SENTRY_CREDENTIALS
+          valueFrom:
+            secretKeyRef:
+              key: sentry_credentials
+              name: backend-secrets
+        - name: SLACK_SERVICE_AUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: slack_service_auth_token
+              name: backend-secrets   
         - name: JWT_SECRET_KEY
           valueFrom:
             secretKeyRef:
