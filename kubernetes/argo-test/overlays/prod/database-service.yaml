@@ -1,0 +1,7 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: opcode-postgres
+spec:
+  type: ExternalName
+  externalName: prod-postgres-20180107.czwauqf3tjaz.us-east-2.rds.amazonaws.com

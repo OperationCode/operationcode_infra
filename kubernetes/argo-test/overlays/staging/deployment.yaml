@@ -1,0 +1,13 @@
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: operationcode-backend
+spec:
+  template:
+    spec:
+      containers:
+      - name: app
+        env:
+        - name: RAILS_ENV
+          value: staging
