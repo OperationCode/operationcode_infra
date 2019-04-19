@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# DEPRECATED, ONLY HERE FOR HISTORICAL REFERENCE
+# Ask @ohaiwalt for more info
+
 set -euf -o pipefail
 
 # This is a quick hacky script to standup operationcode.org on kubernetes
@@ -13,17 +16,6 @@ function add_k8s_resources(){
   if [[ -f "deployment.yml" ]]; then $KUBECTL create -f deployment.yml; fi
   if [[ -f "service.yml" ]]; then $KUBECTL create -f service.yml; fi
   if [[ -f "daemonset.yml" ]]; then $KUBECTL create -f daemonset.yml; fi
-}
-
-# This function assumes you have the required secrets for an app
-# defined as env vars at ${app_name}_secret.sh
-function create_secrets_for(){
-  app_name=$1
-  cd secrets
-  . ~/bin/${app_name}_secrets.sh
-  ./create_secrets.sh
-  $KUBECTL create -f secret.yml
-  cd ..
 }
 
 # Create namespace
