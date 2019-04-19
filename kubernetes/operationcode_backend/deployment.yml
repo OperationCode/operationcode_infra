@@ -136,7 +136,17 @@ spec:
           valueFrom:
             secretKeyRef:
               name: backend-secrets
-              key: slack_token
+              key: slack_token        
+        - name: SENDGRID_PASSWORD 
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: sendgrid_password 
+        - name: SENDGRID_USERNAME 
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: sendgrid_username 
         - name: RAILS_ENV
           value: production
         - name: SENTRY_CREDENTIALS
