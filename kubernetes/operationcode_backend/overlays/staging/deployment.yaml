@@ -11,3 +11,7 @@ spec:
         env:
         - name: RAILS_ENV
           value: staging
+      - name: sidekiq
+        env:
+        - name: RAILS_ENV
+          value: staging
