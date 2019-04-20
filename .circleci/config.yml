@@ -9,8 +9,9 @@ jobs:
 
       - run:
           command: |
-            curl https://github.com/gruntwork-io/terragrunt/releases/download/v0.18.3/terragrunt_linux_amd64
-            mv terragrunt_linux_amd64 bin/terragrunt
+            curl -L -s https://github.com/gruntwork-io/terragrunt/releases/download/v0.18.3/terragrunt_linux_amd64 \
+              -o bin/terragrunt
+            chmod +x bin/terragrunt
 
       - run:
           command: |
