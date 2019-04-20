@@ -1,0 +1,91 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: resources-api
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  template:
+    spec:
+      containers:
+      - name: app
+        image: #operationcode/operationcode_backend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: FLASK_APP
+          value: run.py
+        - name: SQLALCHEMY_DATABASE_URI
+          valueFrom:
+            secretKeyRef:
+              name: resources-secrets
+              key: sqlalchemy_database_uri
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: resources-secrets
+              key: postgres_user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: resources-secrets
+              key: postgres_password
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: resources-secrets
+              key: postgres_db
+        - name: DB_HOST
+          value: postgres
+        - name: DB_PORT
+          value: 5432
+        - name: DB_DATABASE
+          value: resources-psql
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: resources-secrets
+              key: db_username
+        - name: DB_CONNECTION
+          value: pgsql
+        - name: USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: resources-secrets
+              key: username
+        - name: PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: resources-secrets
+              key: password
+        - name: DB
+          valueFrom:
+            secretKeyRef:
+              name: resources-secrets
+              key: resources-psql
+        - name: FLASK_SKIP_DOTENV
+          value: 1
+      - name: postgres
+        image: postgres:10.1-alpine
+        imagePullPolicy: Always
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: resources-secrets
+              key: postgres_user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: resources-secrets
+              key: postgres_password
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: resources-secrets
+              key: resources-psql
+      volumes:
+      - name: resources-secrets
+        secret:
+          secretName: resources-secrets

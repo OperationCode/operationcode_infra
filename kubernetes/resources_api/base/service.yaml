@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: resources-api-service
+spec:
+  selector:
+    app: resources-api
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+      targetPort: 3000
+  type: ClusterIP
