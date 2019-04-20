@@ -1,17 +1,3 @@
-resource "dnsimple_record" "root" {
-  domain = "${var.dnsimple-domain}"
-  name   = ""
-  type   = "URL"
-  value  = "https://operationcode.org"
-}
-
-resource "dnsimple_record" "www" {
-  domain = "${var.dnsimple-domain}"
-  name   = "www"
-  type   = "URL"
-  value  = "https://operationcode.org"
-}
-
 resource "dnsimple_record" "api" {
   domain = "${var.dnsimple-domain}"
   name = "api"
