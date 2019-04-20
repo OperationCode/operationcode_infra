@@ -37,7 +37,6 @@ jobs:
       - run:
           name: Deploy if tests pass and branch is Staging
           command: |
-            tree
             cd dns/operationcode.net/
             /root/project/bin/terragrunt plan -out "planfile"
 
@@ -62,7 +61,6 @@ jobs:
       - run:
           name: Deploy if tests pass and branch is Master
           command: |
-            tree
             cd dns/operationcode.net/
             /root/project/bin/terragrunt apply -auto-approve -input=false "planfile"
 
