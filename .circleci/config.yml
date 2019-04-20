@@ -9,21 +9,49 @@ jobs:
 
       - run:
           command: |
+            curl https://github.com/gruntwork-io/terragrunt/releases/download/v0.18.3/terragrunt_linux_amd64
+            mv terragrunt_linux_amd64 bin/terragrunt
+
+      - run:
+          command: |
+
             cd dns/operationcode.net/
             terraform validate
+
+      - save_cache:
+          key: terragrunt
+          paths:
+            - bin/terragrunt
 
   plan:
     docker:
       - image: hashicorp/terraform:light
     steps:
+      - restore_cache:
+          key: terragrunt
+          paths:
+            - bin/terragrunt
+
       - run:
           name: Deploy if tests pass and branch is Staging
           command: terragrunt plan -out "planfile"
+
+      - save_cache:
+          key: terragrunt
+          paths:
+            - bin/terragrunt
+            - planfile
 
   apply:
     docker:
       - image: hashicorp/terraform:light
     steps:
+      - restore_cache:
+          key: terragrunt
+          paths:
+            - bin/terragrunt
+            - planfile
+
       - run:
           name: Deploy if tests pass and branch is Master
           command: terragrunt apply -auto-approve -input=false "planfile"
