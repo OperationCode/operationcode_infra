@@ -17,7 +17,7 @@ jobs:
           command: |
 
             cd dns/operationcode.net/
-            terragrunt validate
+            /root/project/bin/terragrunt validate
 
       - save_cache:
           key: terragrunt
@@ -35,7 +35,9 @@ jobs:
 
       - run:
           name: Deploy if tests pass and branch is Staging
-          command: terragrunt plan -out "planfile"
+          command: |
+            cd dns/operationcode.net/
+            /root/project/bin/terragrunt plan -out "planfile"
 
       - save_cache:
           key: terragrunt
@@ -55,7 +57,9 @@ jobs:
 
       - run:
           name: Deploy if tests pass and branch is Master
-          command: terragrunt apply -auto-approve -input=false "planfile"
+          command: |
+            cd dns/operationcode.net/
+            /root/project/bin/terragrunt apply -auto-approve -input=false "planfile"
 
 workflows:
   version: 2
