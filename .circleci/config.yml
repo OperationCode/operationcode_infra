@@ -1,16 +1,50 @@
 version: 2
 jobs:
-  build:
+  validate:
     docker:
-      - image: debian:stretch
+      - image: hashicorp/terraform:light
+
+    environment:
+      DNSIMPLE_TOKEN: foo
+      DNSIMPLE_ACCOUNT: bar
+      AWS_ACCESS_KEY_ID: baz
+      AWS_SECRET_ACCESS_KEY: foobar
+
 
     steps:
       - checkout
 
       - run:
-          name: Greeting
-          command: echo Hello, world.
+          command: terragrunt validate
 
+  plan:
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
       - run:
-          name: Print the Current Time
-          command: date
+          name: Deploy if tests pass and branch is Staging
+          command: terragrunt plan -out "planfile"
+
+  apply:
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - run:
+          name: Deploy if tests pass and branch is Master
+          command: terragrunt apply -auto-approve -input=false "planfile"
+
+workflows:
+  version: 2
+  terraform:
+    jobs:
+      - validate
+      - plan:
+          requires:
+            - validate
+      - apply:
+          requires:
+            - validate
+            - plan
+          # filters:
+          #   branches:
+          #     only: master
