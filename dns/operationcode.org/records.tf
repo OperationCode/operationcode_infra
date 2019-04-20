@@ -11,3 +11,10 @@ resource "dnsimple_record" "staging_api" {
   type = "CNAME"
   value = "${var.k8s-cluster-ingress}"
 }
+
+resource "dnsimple_record" "dashboards" {
+  domain = "${var.hosted-zone}"
+  name = "dashboards"
+  type = "CNAME"
+  value = "${var.k8s-cluster-ingress}"
+}
