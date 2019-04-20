@@ -4,13 +4,6 @@ jobs:
     docker:
       - image: hashicorp/terraform:light
 
-    environment:
-      DNSIMPLE_TOKEN: foo
-      DNSIMPLE_ACCOUNT: bar
-      AWS_ACCESS_KEY_ID: baz
-      AWS_SECRET_ACCESS_KEY: foobar
-
-
     steps:
       - checkout
 
