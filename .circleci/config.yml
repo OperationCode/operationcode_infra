@@ -58,7 +58,7 @@ jobs:
       - run:
           name: terraform apply
           command: |
-            /root/project/bin/terragrunt apply-all
+            /root/project/bin/terragrunt apply-all --terragrunt-non-interactive
 
 workflows:
   version: 2
