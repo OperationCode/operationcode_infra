@@ -3,6 +3,7 @@ jobs:
   validate:
     docker:
       - image: hashicorp/terraform:light
+    working_directory: /root/project/dns/operationcode.net/
 
     steps:
       - checkout
@@ -13,6 +14,7 @@ jobs:
   plan:
     docker:
       - image: hashicorp/terraform:light
+    working_directory: /root/project/dns/operationcode.net/
     steps:
       - run:
           name: Deploy if tests pass and branch is Staging
@@ -21,6 +23,7 @@ jobs:
   apply:
     docker:
       - image: hashicorp/terraform:light
+    working_directory: /root/project/dns/operationcode.net/
     steps:
       - run:
           name: Deploy if tests pass and branch is Master
