@@ -34,31 +34,26 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: airtable_base_id
-              optional: true
         - name: GIT_HUB_CLIENT_ID
           valueFrom:
             secretKeyRef:
               name: backend-secrets
               key: git_hub_client_id
-              optional: true
         - name: GIT_HUB_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               name: backend-secrets
               key: git_hub_client_secret
-              optional: true
         - name: GIT_HUB_OAUTH_TOKEN
           valueFrom:
             secretKeyRef:
               name: backend-secrets
               key: git_hub_oauth_token
-              optional: true
         - name: PY_BOT_AUTH_KEY
           valueFrom:
             secretKeyRef:
               name: backend-secrets
               key: py_bot_auth_key
-              optional: true
         - name: POSTGRES_HOST
           value: opcode-postgres
         - name: REDIS_URL
@@ -95,6 +90,26 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: skylight_authentication
+        - name: SENTRY_CREDENTIALS
+          valueFrom:
+            secretKeyRef:
+              key: sentry_credentials
+              name: backend-secrets
+        - name: SENDGRID_PASSWORD 
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: sendgrid_password 
+        - name: SENDGRID_USERNAME 
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: sendgrid_username 
+        - name: SLACK_SERVICE_AUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: slack_service_auth_token
+              name: backend-secrets   
       - name: sidekiq
         image: operationcode/operationcode_backend:latest
         command: ["sidekiq", "-C config/sidekiq.yml.erb"]
@@ -128,9 +143,29 @@ spec:
           valueFrom:
             secretKeyRef:
               name: backend-secrets
-              key: slack_token
+              key: slack_token        
+        - name: SENDGRID_PASSWORD 
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: sendgrid_password 
+        - name: SENDGRID_USERNAME 
+          valueFrom:
+            secretKeyRef:
+              name: backend-secrets
+              key: sendgrid_username 
         - name: RAILS_ENV
           value: production
+        - name: SENTRY_CREDENTIALS
+          valueFrom:
+            secretKeyRef:
+              key: sentry_credentials
+              name: backend-secrets
+        - name: SLACK_SERVICE_AUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: slack_service_auth_token
+              name: backend-secrets   
         - name: JWT_SECRET_KEY
           valueFrom:
             secretKeyRef:
