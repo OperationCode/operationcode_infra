@@ -9,7 +9,7 @@ jobs:
       - checkout
 
       - run:
-          command: |
+          shell: |
           pwd
           ls -la
           terraform validate
