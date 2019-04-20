@@ -9,7 +9,10 @@ jobs:
       - checkout
 
       - run:
-          command: terraform validate
+          command: |
+          pwd
+          ls -la
+          terraform validate
 
   plan:
     docker:
