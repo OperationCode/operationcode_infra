@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: #operationcode/operationcode_backend:latest
+        image: operationcode/resources-api:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3000
@@ -32,10 +32,7 @@ spec:
               name: resources-secrets
               key: postgres_password
         - name: POSTGRES_DB
-          valueFrom:
-            secretKeyRef:
-              name: resources-secrets
-              key: postgres_db
+          value: postgres
         - name: DB_HOST
           value: postgres
         - name: DB_PORT
@@ -66,25 +63,6 @@ spec:
               key: resources-psql
         - name: FLASK_SKIP_DOTENV
           value: 1
-      - name: postgres
-        image: postgres:10.1-alpine
-        imagePullPolicy: Always
-        env:
-        - name: POSTGRES_USER
-          valueFrom:
-            secretKeyRef:
-              name: resources-secrets
-              key: postgres_user
-        - name: POSTGRES_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: resources-secrets
-              key: postgres_password
-        - name: POSTGRES_DB
-          valueFrom:
-            secretKeyRef:
-              name: resources-secrets
-              key: resources-psql
       volumes:
       - name: resources-secrets
         secret:

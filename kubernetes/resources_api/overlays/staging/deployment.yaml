@@ -11,4 +11,3 @@ spec:
         env:
         - name: FLASK_ENV
           value: staging
-      - name: postgres
