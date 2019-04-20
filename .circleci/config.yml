@@ -37,14 +37,12 @@ jobs:
       - run:
           name: terraform plan
           command: |
-            cd dns/operationcode.net/
-            /root/project/bin/terragrunt plan -out "planfile"
+            /root/project/bin/terragrunt plan-all
 
       - save_cache:
           key: terragrunt
           paths:
             - bin/terragrunt
-            - dns/operationcode.net/planfile
 
   apply:
     docker:
@@ -56,13 +54,11 @@ jobs:
           key: terragrunt
           paths:
             - bin/terragrunt
-            - dns/operationcode.net/planfile
 
       - run:
           name: terraform apply
           command: |
-            cd dns/operationcode.net/
-            /root/project/bin/terragrunt apply -auto-approve
+            /root/project/bin/terragrunt apply-all
 
 workflows:
   version: 2
@@ -76,6 +72,6 @@ workflows:
           requires:
             - validate
             - plan
-          # filters:
-          #   branches:
-          #     only: master
+          filters:
+            branches:
+              only: master
