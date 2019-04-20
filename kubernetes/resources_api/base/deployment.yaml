@@ -32,35 +32,7 @@ spec:
               name: resources-secrets
               key: postgres_password
         - name: POSTGRES_DB
-          value: postgres
-        - name: DB_HOST
-          value: postgres
-        - name: DB_PORT
-          value: 5432
-        - name: DB_DATABASE
           value: resources-psql
-        - name: DB_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: resources-secrets
-              key: db_username
-        - name: DB_CONNECTION
-          value: pgsql
-        - name: USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: resources-secrets
-              key: username
-        - name: PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: resources-secrets
-              key: password
-        - name: DB
-          valueFrom:
-            secretKeyRef:
-              name: resources-secrets
-              key: resources-psql
         - name: FLASK_SKIP_DOTENV
           value: 1
       volumes:
