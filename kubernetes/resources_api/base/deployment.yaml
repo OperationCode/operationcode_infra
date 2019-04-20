@@ -12,7 +12,7 @@ spec:
         image: operationcode/resources-api:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 3000
+        - containerPort: 8000
         env:
         - name: FLASK_APP
           value: run.py

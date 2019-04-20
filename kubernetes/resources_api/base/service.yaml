@@ -9,5 +9,5 @@ spec:
     - protocol: TCP
       name: http
       port: 80
-      targetPort: 3000
+      targetPort: 8000
   type: ClusterIP
