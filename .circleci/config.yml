@@ -35,7 +35,7 @@ jobs:
             - bin/terragrunt
 
       - run:
-          name: Deploy if tests pass and branch is Staging
+          name: terraform plan
           command: |
             cd dns/operationcode.net/
             /root/project/bin/terragrunt plan -out "planfile"
@@ -44,7 +44,7 @@ jobs:
           key: terragrunt
           paths:
             - bin/terragrunt
-            - planfile
+            - dns/operationcode.net/planfile
 
   apply:
     docker:
@@ -56,10 +56,10 @@ jobs:
           key: terragrunt
           paths:
             - bin/terragrunt
-            - planfile
+            - dns/operationcode.net/planfile
 
       - run:
-          name: Deploy if tests pass and branch is Master
+          name: terraform apply
           command: |
             cd dns/operationcode.net/
             /root/project/bin/terragrunt apply -auto-approve -input=false "planfile"
