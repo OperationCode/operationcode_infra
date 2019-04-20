@@ -4,4 +4,4 @@ terragrunt = {
   }
 }
 
-dnsimple_domain = "operationcode.net"
+hosted-zone = "operationcode.net"

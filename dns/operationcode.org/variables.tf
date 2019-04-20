@@ -1,4 +1,4 @@
-variable "dnsimple-domain" {
+variable "hosted-zone" {
   description = "Hosted zone"
   type        = "string"
 }
