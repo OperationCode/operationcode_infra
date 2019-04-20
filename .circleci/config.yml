@@ -62,7 +62,7 @@ jobs:
           name: terraform apply
           command: |
             cd dns/operationcode.net/
-            /root/project/bin/terragrunt apply -auto-approve -input=false "planfile"
+            /root/project/bin/terragrunt apply -auto-approve
 
 workflows:
   version: 2
