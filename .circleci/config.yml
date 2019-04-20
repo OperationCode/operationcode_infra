@@ -1,16 +1,77 @@
 version: 2
 jobs:
-  build:
+  validate:
     docker:
-      - image: debian:stretch
+      - image: hashicorp/terraform:light
 
     steps:
       - checkout
 
       - run:
-          name: Greeting
-          command: echo Hello, world.
+          command: |
+            mkdir bin
+            curl -sSL https://github.com/gruntwork-io/terragrunt/releases/download/v0.18.3/terragrunt_linux_amd64 -o bin/terragrunt
+            chmod +x bin/terragrunt
 
       - run:
-          name: Print the Current Time
-          command: date
+          command: |
+            cd dns/operationcode.net/
+            /root/project/bin/terragrunt validate
+
+      - save_cache:
+          key: terragrunt
+          paths:
+            - bin/terragrunt
+
+  plan:
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: terragrunt
+          paths:
+            - bin/terragrunt
+
+      - run:
+          name: terraform plan
+          command: |
+            /root/project/bin/terragrunt plan-all
+
+      - save_cache:
+          key: terragrunt
+          paths:
+            - bin/terragrunt
+
+  apply:
+    docker:
+      - image: hashicorp/terraform:light
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: terragrunt
+          paths:
+            - bin/terragrunt
+
+      - run:
+          name: terraform apply
+          command: |
+            /root/project/bin/terragrunt apply-all
+
+workflows:
+  version: 2
+  terraform:
+    jobs:
+      - validate
+      - plan:
+          requires:
+            - validate
+      - apply:
+          requires:
+            - validate
+            - plan
+          filters:
+            branches:
+              only: master
