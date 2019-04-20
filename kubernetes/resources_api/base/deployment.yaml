@@ -16,11 +16,6 @@ spec:
         env:
         - name: FLASK_APP
           value: run.py
-        - name: SQLALCHEMY_DATABASE_URI
-          valueFrom:
-            secretKeyRef:
-              name: resources-secrets
-              key: sqlalchemy_database_uri
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
@@ -33,8 +28,6 @@ spec:
               key: postgres_password
         - name: POSTGRES_DB
           value: resources-psql
-        - name: FLASK_SKIP_DOTENV
-          value: 1
       volumes:
       - name: resources-secrets
         secret:
