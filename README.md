@@ -1,6 +1,7 @@
 # operationcode_infra
 Platform infrastructure for the Operation Code site.
 
+[![CircleCI](https://circleci.com/gh/OperationCode/operationcode_infra/tree/master.svg?style=svg)](https://circleci.com/gh/OperationCode/operationcode_infra/tree/master)
 
 ## warning
 
