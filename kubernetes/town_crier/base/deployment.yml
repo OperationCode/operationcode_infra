@@ -30,9 +30,6 @@ spec:
             secretKeyRef:
               name: town-crier-secrets
               key: slack_token
-        volumeMounts:
-        - name: town-crier-secrets
-          mountPath: /run/secrets
       volumes:
       - name: town-crier-secrets
         secret:
