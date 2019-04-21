@@ -14,8 +14,6 @@ spec:
         ports:
         - containerPort: 8000
         env:
-        - name: FLASK_APP
-          value: run.py
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
