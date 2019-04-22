@@ -112,7 +112,7 @@ spec:
               name: backend-secrets   
       - name: sidekiq
         image: operationcode/operationcode_backend:latest
-        command: ["sidekiq", "-C config/sidekiq.yml.erb"]
+        command: ["bundle", "exec", sidekiq", "-C config/sidekiq.yml.erb"]
         imagePullPolicy: Always
         env:
         - name: POSTGRES_PASSWORD
