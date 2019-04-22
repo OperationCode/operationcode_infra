@@ -110,9 +110,15 @@ spec:
             secretKeyRef:
               key: slack_service_auth_token
               name: backend-secrets   
+        - name: SLACK_SERVICE_URL 
+          value: http://pybot.operationcode.org:8080/pybot/api/v1/slack  
       - name: sidekiq
         image: operationcode/operationcode_backend:latest
-        command: ["sidekiq", "-C config/sidekiq.yml.erb"]
+<<<<<<< HEAD
+        command: ["bundle", "exec", sidekiq"]
+=======
+        command: ["bundle", "exec", "sidekiq"]
+>>>>>>> origin
         imagePullPolicy: Always
         env:
         - name: POSTGRES_PASSWORD
@@ -176,6 +182,8 @@ spec:
             secretKeyRef:
               name: backend-secrets
               key: secret_key_base
+        - name: SLACK_SERVICE_URL 
+          value: http://pybot.operationcode.org:8080/pybot/api/v1/slack  
       volumes:
       - name: backend-secrets
         secret:
