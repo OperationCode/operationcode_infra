@@ -1,0 +1,13 @@
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: resources-api
+spec:
+  template:
+    spec:
+      containers:
+      - name: app
+        env:
+        - name: FLASK_ENV
+          value: staging

@@ -1,0 +1,32 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: resources-api
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  template:
+    spec:
+      containers:
+      - name: app
+        image: operationcode/resources-api:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: resources-secrets
+              key: postgres_user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: resources-secrets
+              key: postgres_password
+        - name: POSTGRES_DB
+          value: resources-psql
+      volumes:
+      - name: resources-secrets
+        secret:
+          secretName: resources-secrets
