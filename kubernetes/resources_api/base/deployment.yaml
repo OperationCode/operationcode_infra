@@ -17,16 +17,16 @@ spec:
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
-              name: resources-secrets
+              name: resources-api-secrets
               key: postgres_user
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: resources-secrets
+              name: resources-api-secrets
               key: postgres_password
         - name: POSTGRES_DB
           value: resources-psql
       volumes:
-      - name: resources-secrets
+      - name: resources-api-secrets
         secret:
-          secretName: resources-secrets
+          secretName: resources-api-secrets
