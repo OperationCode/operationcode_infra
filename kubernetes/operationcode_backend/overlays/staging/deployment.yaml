@@ -11,7 +11,11 @@ spec:
         env:
         - name: RAILS_ENV
           value: staging
+        - name: SLACK_SERVICE_URL
+          value: http://pybot.staging.operationcode.org:8080/pybot/api/v1/slack
       - name: sidekiq
         env:
         - name: RAILS_ENV
           value: staging
+        - name: SLACK_SERVICE_URL
+          value: http://pybot.staging.operationcode.org:8080/pybot/api/v1/slack
