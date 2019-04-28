@@ -10,9 +10,11 @@ spec:
       containers:
       - name: app
         image: operationcode/resources-api:latest
+        command: ["flask"]
+        args: ["run", "-h", "0.0.0.0"]
         imagePullPolicy: Always
         ports:
-        - containerPort: 8000
+        - containerPort: 5000
         env:
         - name: POSTGRES_USER
           valueFrom:
@@ -25,9 +27,9 @@ spec:
               name: resources-api-secrets
               key: postgres_password
         - name: POSTGRES_DB
-          value: resources_api 
+          value: resources_api
         - name: POSTGRES_HOST
-          value: resources-postgres 
+          value: resources-postgres
       volumes:
       - name: resources-api-secrets
         secret:
