@@ -25,7 +25,7 @@ spec:
               name: resources-api-secrets
               key: postgres_password
         - name: POSTGRES_DB
-          value: resources-psql
+          value: resources_api 
         - name: POSTGRES_HOST
           value: resources-postgres 
       volumes:
