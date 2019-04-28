@@ -1,0 +1,7 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: resources-postgres
+spec:
+  type: ExternalName
+  externalName: resources-api-20190427.czwauqf3tjaz.us-east-2.rds.amazonaws.com
