@@ -111,7 +111,7 @@ spec:
               key: slack_service_auth_token
               name: backend-secrets   
         - name: SLACK_SERVICE_URL
-          value: http://pyback-lb-197482116.us-east-2.elb.amazonaws.com:80/pybot/api/v1/slack
+          value: https://pybot.operationcode.org/pybot/api/v1/slack
       - name: sidekiq
         image: operationcode/operationcode_backend:latest
         command: ["bundle", "exec", "sidekiq"]
@@ -179,7 +179,7 @@ spec:
               name: backend-secrets
               key: secret_key_base
         - name: SLACK_SERVICE_URL
-          value: http://pyback-lb-197482116.us-east-2.elb.amazonaws.com:80/pybot/api/v1/slack
+          value: https://pybot.operationcode.org/pybot/api/v1/slack
       volumes:
       - name: backend-secrets
         secret:
