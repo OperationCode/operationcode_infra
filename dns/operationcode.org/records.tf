@@ -19,6 +19,13 @@ resource "dnsimple_record" "dashboards" {
   value = "${var.k8s-cluster-ingress}"
 }
 
+resource "dnsimple_record" "pybot" {
+  domain = "${var.hosted-zone}"
+  name = "pybot"
+  type = "CNAME"
+  value = "${var.pybot-lb-ingress}"
+}
+
 resource "dnsimple_record" "resources_api" {
   domain = "${var.hosted-zone}"
   name = "resources"
