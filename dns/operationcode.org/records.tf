@@ -26,6 +26,13 @@ resource "dnsimple_record" "pybot" {
   value = "${var.pybot-lb-ingress}"
 }
 
+resource "dnsimple_record" "staging_pybot" {
+  domain = "${var.hosted-zone}"
+  name = "pybot.staging"
+  type = "CNAME"
+  value = "${var.pybot-lb-ingress}"
+}
+
 resource "dnsimple_record" "resources_api" {
   domain = "${var.hosted-zone}"
   name = "resources"
