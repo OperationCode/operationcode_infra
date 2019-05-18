@@ -33,6 +33,13 @@ resource "dnsimple_record" "staging_pybot" {
   value = "${var.pybot-lb-ingress}"
 }
 
+resource "dnsimple_record" "staging_pybot_cert_verification" {
+  domain = "${var.hosted-zone}"
+  name = "_69b5c7278c7c13092899e1b67e8de6c1.pybot.staging"
+  type = "CNAME"
+  value = "_9fdd906cbd86d545894523f8cd809812.ltfvzjuylp.acm-validations.aws"
+}
+
 resource "dnsimple_record" "resources_api" {
   domain = "${var.hosted-zone}"
   name = "resources"
