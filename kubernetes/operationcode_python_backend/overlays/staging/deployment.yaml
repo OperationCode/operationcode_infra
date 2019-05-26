@@ -1,0 +1,17 @@
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: back-end
+spec:
+  template:
+    spec:
+      containers:
+      - name: app
+        env:
+        - name: DB_HOST
+          value: django-staging.czwauqf3tjaz.us-east-2.rds.amazonaws.com
+        - name: ENVIRONMENT
+          value: aws_staging
+        - name: RELEASE
+          value: 0.1.0
