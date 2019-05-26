@@ -1,0 +1,89 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: back-end
+spec:
+  replicas: 2
+  revisionHistoryLimit: 5
+  template:
+    spec:
+      containers:
+      - name: app
+        image: operationcode/back-end:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        env:
+        - name: DB_NAME
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: postgres_name
+        - name: DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: postgres_user
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+            key: postgres_password
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: postgres_host
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: postgres_port
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: secret_key_base
+        - name: PYBOT_AUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: pybot_auth_token
+        - name: PYBOT_URL
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: pybot_url
+        - name: MAILCHIMP_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: mailchimp_api_key
+        - name: MAILCHIMP_LIST_ID
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: mailchimp_list_id
+        - name: SENTRY_DSN
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: sentry_dsn
+
+        - name: GOOGLE_OAUTH_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: google_oauth_client_id
+
+        - name: GOOGLE_OAUTH_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: google_oauth_client_secret
+
+
+      volumes:
+      - name: python-backend-secrets
+        secret:
+          secretName: python-backend-secrets

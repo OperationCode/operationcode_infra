@@ -1,0 +1,15 @@
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: back-end
+spec:
+  template:
+    spec:
+      containers:
+      - name: app
+        env:
+        - name: DB_HOST
+          value: # TODO
+        - name: ENVIRONMENT
+          value: aws_prod
