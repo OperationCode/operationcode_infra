@@ -1,4 +1,4 @@
-resource "dnsimple_record" "www_verification" {
+resource "dnsimple_record" "www_txt" {
   domain = "${var.hosted-zone}"
   name = "_now"
   type = "TXT"
