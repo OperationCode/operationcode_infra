@@ -1,15 +1,22 @@
+resource "dnsimple_record" "root" {
+  domain = "${var.hosted-zone}"
+  name   = ""
+  type   = "URL"
+  value  = "www.operationcode.org"
+}
+
+resource "dnsimple_record" "www" {
+  domain = "${var.hosted-zone}"
+  name = "www"
+  type = "CNAME"
+  value = "alias.zeit.co"
+}
+
 resource "dnsimple_record" "www_txt" {
   domain = "${var.hosted-zone}"
   name = "_now"
   type = "TXT"
   value = "Qmd8XawRvuECtFLQm8SytbgcW2PV2jthtfMy7ujLnTN2gL"
-}
-
-resource "dnsimple_record" "www_alias" {
-  domain = "${var.hosted-zone}"
-  name = ""
-  type = "ALIAS"
-  value = "alias.zeit.co"
 }
 
 resource "dnsimple_record" "api" {
