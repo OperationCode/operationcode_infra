@@ -5,10 +5,10 @@ resource "dnsimple_record" "www_txt" {
   value = "Qmd8XawRvuECtFLQm8SytbgcW2PV2jthtfMy7ujLnTN2gL"
 }
 
-resource "dnsimple_record" "www_cname" {
+resource "dnsimple_record" "www_alias" {
   domain = "${var.hosted-zone}"
   name = ""
-  type = "CNAME"
+  type = "ALIAS"
   value = "alias.zeit.co"
 }
 
