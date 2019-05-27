@@ -18,27 +18,27 @@ spec:
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
-              key: postgres_name
+              key: db_name 
         - name: DB_USER
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
-              key: postgres_user
+              key: db_user 
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
-              key: postgres_password
+              key: db_password 
         - name: DB_PORT
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
-              key: postgres_port
+              key: db_port 
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
-              key: secret_key_base
+              key: secret_key 
         - name: PYBOT_AUTH_TOKEN
           valueFrom:
             secretKeyRef:
@@ -64,20 +64,16 @@ spec:
             secretKeyRef:
               name: python-backend-secrets
               key: sentry_dsn
-
         - name: GOOGLE_OAUTH_CLIENT_ID
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
               key: google_oauth_client_id
-
         - name: GOOGLE_OAUTH_CLIENT_SECRET
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
               key: google_oauth_client_secret
-
-
       volumes:
       - name: python-backend-secrets
         secret:
