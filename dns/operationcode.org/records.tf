@@ -1,9 +1,9 @@
-# resource "dnsimple_record" "root" {
-#   domain = "${var.hosted-zone}"
-#   name   = ""
-#   type   = "URL"
-#   value  = "www.operationcode.org"
-# }
+resource "dnsimple_record" "root" {
+  domain = "${var.hosted-zone}"
+  name   = ""
+  type   = "URL"
+  value  = "www.operationcode.org"
+}
 
 # resource "dnsimple_record" "www" {
 #   domain = "${var.hosted-zone}"
