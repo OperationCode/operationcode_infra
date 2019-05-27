@@ -1,6 +1,6 @@
 resource "dnsimple_record" "www" {
   domain = "${var.hosted-zone}"
-  name = ""
+  name = "_now"
   type = "TXT"
   value = "Qmd8XawRvuECtFLQm8SytbgcW2PV2jthtfMy7ujLnTN2gL"
 }
