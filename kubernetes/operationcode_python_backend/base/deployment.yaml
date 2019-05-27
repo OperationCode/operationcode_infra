@@ -29,11 +29,6 @@ spec:
             secretKeyRef:
               name: python-backend-secrets
               key: postgres_password
-        - name: DB_HOST
-          valueFrom:
-            secretKeyRef:
-              name: python-backend-secrets
-              key: postgres_host
         - name: DB_PORT
           valueFrom:
             secretKeyRef:
