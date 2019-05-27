@@ -5,6 +5,13 @@ resource "dnsimple_record" "www" {
   value = "Qmd8XawRvuECtFLQm8SytbgcW2PV2jthtfMy7ujLnTN2gL"
 }
 
+resource "dnsimple_record" "www" {
+  domain = "${var.hosted-zone}"
+  name = ""
+  type = "CNAME"
+  value = "alias.zeit.co"
+}
+
 resource "dnsimple_record" "api" {
   domain = "${var.hosted-zone}"
   name = "api"
