@@ -8,6 +8,7 @@ spec:
       containers:
         - name: app
           image: operationcode/back-end:master
+          imagePullPolicy: Always
           env:
             - name: DB_HOST
               value: # TODO

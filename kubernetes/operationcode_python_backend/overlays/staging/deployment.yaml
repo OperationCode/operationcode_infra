@@ -8,6 +8,7 @@ spec:
       containers:
         - name: app
           image: operationcode/back-end:staging
+          imagePullPolicy: Always
           env:
             - name: DB_HOST
               value: django-staging.czwauqf3tjaz.us-east-2.rds.amazonaws.com
