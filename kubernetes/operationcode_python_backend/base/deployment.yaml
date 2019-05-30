@@ -14,6 +14,12 @@ spec:
         ports:
         - containerPort: 8000
         env:
+        - name: DB_HOST
+          value: # Requires overlay 
+        - name: ENVIRONMENT
+          value: # Requires overlay 
+        - name: RELEASE
+          value: # Requires overlay 
         - name: DB_NAME
           valueFrom:
             secretKeyRef:
@@ -34,6 +40,26 @@ spec:
             secretKeyRef:
               name: python-backend-secrets
               key: db_port 
+        - name: AWS_STORAGE_BUCKET_NAME 
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: aws_storage_bucket_name 
+        - name: BUCKET_REGION_NAME 
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: db_port 
+        - name: AWS_ACCESS_KEY_ID 
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: aws_access_key_id 
+        - name: AWS_SECRET_ACCESS_KEY 
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: aws_secret_access_key 
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
