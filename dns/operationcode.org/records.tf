@@ -74,3 +74,10 @@ resource "dnsimple_record" "resources_staging_api" {
   type = "CNAME"
   value = "${var.k8s-cluster-ingress}"
 }
+
+resource "dnsimple_record" "python_backend_dev" {
+  domain = "${var.hosted-zone}"
+  name = "api.dev"
+  type = "CNAME"
+  value = "${var.k8s-cluster-ingress}"
+}
