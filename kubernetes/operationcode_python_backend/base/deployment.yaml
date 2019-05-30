@@ -20,6 +20,8 @@ spec:
           value: # Requires overlay 
         - name: RELEASE
           value: # Requires overlay 
+        - name: DB_ENGINE
+          value: django.db.backends.postgresql
         - name: DB_NAME
           valueFrom:
             secretKeyRef:
