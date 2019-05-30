@@ -7,11 +7,11 @@ metadata:
   name: back-end
 spec:
   rules:
-  - host: api.staging.operationcode.org
+  - host: api.dev.operationcode.org
     http:
       paths:
       - backend:
-          serviceName: operationcode-backend-service
+          serviceName: back-end-service
           servicePort: 80
         path: /
   tls:
