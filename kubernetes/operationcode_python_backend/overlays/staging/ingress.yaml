@@ -16,5 +16,5 @@ spec:
         path: /
   tls:
   - hosts:
-    - api.staging.operationcode.org
-    secretName: operationcode-backend-tls
+    - api.dev.operationcode.org
+    secretName: back-end-tls
