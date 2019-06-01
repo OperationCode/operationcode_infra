@@ -102,6 +102,8 @@ spec:
             secretKeyRef:
               name: python-backend-secrets
               key: google_oauth_client_secret
+        - name: EXTRA_HOSTS
+          value: api.dev.operationcode.org
       volumes:
       - name: python-backend-secrets
         secret:
