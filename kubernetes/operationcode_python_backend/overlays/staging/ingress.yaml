@@ -7,7 +7,7 @@ metadata:
   name: back-end
 spec:
   rules:
-  - host: api.dev.operationcode.org
+  - host: api.staging.operationcode.org
     http:
       paths:
       - backend:
@@ -16,5 +16,5 @@ spec:
         path: /
   tls:
   - hosts:
-    - api.dev.operationcode.org
+    - api.staging.operationcode.org
     secretName: back-end-tls
