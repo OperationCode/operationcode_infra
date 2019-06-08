@@ -1,8 +1,8 @@
 resource "dnsimple_record" "root" {
   domain = "${var.hosted-zone}"
   name   = ""
-  type   = "URL"
-  value  = "www.operationcode.org"
+  type   = "ALIAS"
+  value  = "alias.zeit.co"
 }
 
 resource "dnsimple_record" "www" {
