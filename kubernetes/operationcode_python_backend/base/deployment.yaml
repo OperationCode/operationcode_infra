@@ -103,7 +103,7 @@ spec:
               name: python-backend-secrets
               key: google_oauth_client_secret
         - name: EXTRA_HOSTS
-          value: api.dev.operationcode.org
+          value: api.staging.operationcode.org
       volumes:
       - name: python-backend-secrets
         secret:
