@@ -7,6 +7,5 @@ bases:
 - ../../base
 
 resources:
-- ingress.yaml
 - redis-service.yaml
 - database-service.yaml
