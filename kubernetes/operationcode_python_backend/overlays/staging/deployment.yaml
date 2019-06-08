@@ -15,4 +15,4 @@ spec:
             - name: ENVIRONMENT
               value: aws_staging
             - name: RELEASE
-              value: 0.1.0
+              value: 1.0.0
