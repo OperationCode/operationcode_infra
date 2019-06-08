@@ -52,16 +52,6 @@ spec:
             secretKeyRef:
               name: python-backend-secrets
               key: bucket_region_name
-        - name: AWS_ACCESS_KEY_ID 
-          valueFrom:
-            secretKeyRef:
-              name: python-backend-secrets
-              key: aws_access_key_id 
-        - name: AWS_SECRET_ACCESS_KEY 
-          valueFrom:
-            secretKeyRef:
-              name: python-backend-secrets
-              key: aws_secret_access_key 
         - name: SECRET_KEY
           valueFrom:
             secretKeyRef:
