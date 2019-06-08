@@ -11,8 +11,10 @@ spec:
           imagePullPolicy: Always
           env:
             - name: DB_HOST
-              value: # TODO
+              value: python-prod.czwauqf3tjaz.us-east-2.rds.amazonaws.com
             - name: ENVIRONMENT
               value: aws_prod
             - name: EXTRA_HOSTS
               value: api.operationcode.org
+            - name: RELEASE
+              value: 1.0.0
