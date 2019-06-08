@@ -1,16 +1,16 @@
-# resource "dnsimple_record" "root" {
-#   domain = "${var.hosted-zone}"
-#   name   = ""
-#   type   = "URL"
-#   value  = "www.operationcode.org"
-# }
+resource "dnsimple_record" "root" {
+  domain = "${var.hosted-zone}"
+  name   = ""
+  type   = "URL"
+  value  = "www.operationcode.org"
+}
 
-# resource "dnsimple_record" "www" {
-#   domain = "${var.hosted-zone}"
-#   name = "www"
-#   type = "CNAME"
-#   value = "alias.zeit.co"
-# }
+resource "dnsimple_record" "www" {
+  domain = "${var.hosted-zone}"
+  name = "www"
+  type = "CNAME"
+  value = "alias.zeit.co"
+}
 
 resource "dnsimple_record" "www_txt" {
   domain = "${var.hosted-zone}"
