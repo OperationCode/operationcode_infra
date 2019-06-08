@@ -11,7 +11,7 @@ spec:
           imagePullPolicy: Always
           env:
             - name: DB_HOST
-              value: django-staging.czwauqf3tjaz.us-east-2.rds.amazonaws.com
+              value: python-staging.czwauqf3tjaz.us-east-2.rds.amazonaws.com
             - name: ENVIRONMENT
               value: aws_staging
             - name: RELEASE
