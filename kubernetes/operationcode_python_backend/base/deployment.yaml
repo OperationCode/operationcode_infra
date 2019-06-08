@@ -15,39 +15,41 @@ spec:
         - containerPort: 8000
         env:
         - name: DB_HOST
-          value: # Requires overlay 
+          value: # Requires overlay
         - name: ENVIRONMENT
-          value: # Requires overlay 
+          value: # Requires overlay
         - name: RELEASE
-          value: # Requires overlay 
+          value: # Requires overlay
+        - name: SITE_ID
+          value: 3
         - name: DB_ENGINE
           value: django.db.backends.postgresql
         - name: DB_NAME
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
-              key: db_name 
+              key: db_name
         - name: DB_USER
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
-              key: db_user 
+              key: db_user
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
-              key: db_password 
+              key: db_password
         - name: DB_PORT
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
-              key: db_port 
-        - name: AWS_STORAGE_BUCKET_NAME 
+              key: db_port
+        - name: AWS_STORAGE_BUCKET_NAME
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
-              key: aws_storage_bucket_name 
-        - name: BUCKET_REGION_NAME 
+              key: aws_storage_bucket_name
+        - name: BUCKET_REGION_NAME
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
@@ -56,7 +58,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: python-backend-secrets
-              key: secret_key 
+              key: secret_key
         - name: PYBOT_AUTH_TOKEN
           valueFrom:
             secretKeyRef:
