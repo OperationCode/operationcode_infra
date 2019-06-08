@@ -8,7 +8,7 @@ resource "dnsimple_record" "root" {
 resource "dnsimple_record" "www" {
   domain = "${var.hosted-zone}"
   name = "www"
-  type = "CNAME"
+  type = "ALIAS"
   value = "alias.zeit.co"
 }
 
