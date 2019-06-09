@@ -79,6 +79,11 @@ spec:
             secretKeyRef:
               name: python-backend-secrets
               key: mailchimp_list_id
+        - name: MANDRILL_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: mandrill_api_key
         - name: SENTRY_DSN
           valueFrom:
             secretKeyRef:
