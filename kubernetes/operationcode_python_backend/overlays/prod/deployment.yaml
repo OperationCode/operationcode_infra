@@ -7,7 +7,6 @@ spec:
     spec:
       containers:
         - name: app
-          image: operationcode/back-end:latest
           env:
             - name: DB_HOST
               value: python-prod.czwauqf3tjaz.us-east-2.rds.amazonaws.com
@@ -18,4 +17,4 @@ spec:
             - name: RELEASE
               value: 1.0.0
             - name: SITE_ID
-              value: 4
+              value: "4"
