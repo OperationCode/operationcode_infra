@@ -7,10 +7,11 @@ spec:
     spec:
       containers:
         - name: app
+          image: operationcode/back-end:staging
           env:
             - name: DB_HOST
               value: python-staging.czwauqf3tjaz.us-east-2.rds.amazonaws.com
             - name: ENVIRONMENT
               value: aws_staging
             - name: RELEASE
-              value: 1.0.0
+              value: 1.0.1

@@ -7,6 +7,7 @@ spec:
     spec:
       containers:
         - name: app
+          image: operationcode/back-end:master
           env:
             - name: DB_HOST
               value: python-prod.czwauqf3tjaz.us-east-2.rds.amazonaws.com
@@ -15,6 +16,6 @@ spec:
             - name: EXTRA_HOSTS
               value: api.operationcode.org
             - name: RELEASE
-              value: 1.0.0
+              value: 1.0.1
             - name: SITE_ID
               value: "4"
