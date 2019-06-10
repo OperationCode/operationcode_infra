@@ -26,6 +26,20 @@ spec:
             secretKeyRef:
               name: resources-api-secrets
               key: postgres_password
+        - name:  APPLICATION_ID
+          valueFrom:
+            secretKeyRef:
+              name: resources-api-secrets
+              key: algolia_app_id
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: resources-api-secrets
+              key: algolia_api_key
+        - name: INDEX_NAME
+          value: resources_api
+        - name: INDEX_SEARCHED
+          value: false
         - name: POSTGRES_DB
           value: resources_api
         - name: POSTGRES_HOST
