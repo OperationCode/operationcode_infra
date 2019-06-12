@@ -10,7 +10,11 @@ Greetings! Much of Operation Code's web site runs in a [Kubernetes](https://kube
 
 ## Installing the Kubernetes Command Line
 
-This is what you will use to interact with our Kubernetes cluster - where both the front end and back end of the site runs. If you have not already, install the [Homebrew Package Manager](https://brew.sh/), then follow [these instructions](https://www.benpickles.com/articles/72-downgrading-kubectl-with-homebrew) in order to install kubectl@1.8.4 (the version currently running on our server).
+This is what you will use to interact with our Kubernetes cluster - where both the front end and back end of the site runs. If you have not already, install the [Homebrew Package Manager](https://brew.sh/), and run the following:
+
+```bash
+brew install kubernetes-cli
+```
 
 ## Authenticating to the Operation Code Kubernetes Cluster
 
@@ -83,7 +87,7 @@ Copy the output that starts with "#Add the following to your ~/.kube/config".
 
 ## Configuring Kubernetes
 
-Now we'll use this to configure access to Operation Code's Kubernetes cluster.  
+Now we'll use this to configure access to Operation Code's Kubernetes cluster.
 
 Create a ~/.kube directory
 
@@ -225,7 +229,7 @@ Copy the output that starts with "#Add the following to your ~/.kube/config".
 
 ## Configuring Kubernetes
 
-Now we'll use this to configure access to Operation Code's Kubernetes cluster.  
+Now we'll use this to configure access to Operation Code's Kubernetes cluster.
 
 Create a ~/.kube directory
 
