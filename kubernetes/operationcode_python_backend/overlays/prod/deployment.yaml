@@ -19,3 +19,13 @@ spec:
               value: 1.0.1
             - name: SITE_ID
               value: "4"
+            - name: RECAPTCHA_PUBLIC_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: python-backend-secrets
+                  key: recaptcha_public_key
+            - name: RECAPTCHA_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: python-backend-secrets
+                  key: recaptcha_private_key
