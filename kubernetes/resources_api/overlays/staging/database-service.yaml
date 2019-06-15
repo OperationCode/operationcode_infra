@@ -4,4 +4,4 @@ metadata:
   name: resources-postgres
 spec:
   type: ExternalName
-  externalName: resources-api-20190523.czwauqf3tjaz.us-east-2.rds.amazonaws.com
+  externalName: python-staging.czwauqf3tjaz.us-east-2.rds.amazonaws.com
