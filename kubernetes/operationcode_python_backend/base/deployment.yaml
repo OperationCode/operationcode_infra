@@ -111,6 +111,11 @@ spec:
             secretKeyRef:
               name: python-backend-secrets
               key: recaptcha_private_key
+        - name: GITHUB_JWT
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: github_jwt
       volumes:
       - name: python-backend-secrets
         secret:
