@@ -102,9 +102,15 @@ spec:
         - name: EXTRA_HOSTS
           value: api.staging.operationcode.org
         - name: RECAPTCHA_PUBLIC_KEY
-          value: override_me
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: recaptcha_public_key
         - name: RECAPTCHA_PRIVATE_KEY
-          value: override_me
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: recaptcha_private_key
       volumes:
       - name: python-backend-secrets
         secret:
