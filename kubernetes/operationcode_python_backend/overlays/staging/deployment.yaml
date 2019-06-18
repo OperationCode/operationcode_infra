@@ -15,3 +15,5 @@ spec:
               value: aws_staging
             - name: RELEASE
               value: 1.0.1
+            - name: DJANGO_ENV
+              value: staging
