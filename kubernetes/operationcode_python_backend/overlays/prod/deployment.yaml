@@ -19,5 +19,3 @@ spec:
               value: 1.0.1
             - name: SITE_ID
               value: "4"
-            - name: DJANGO_ENV
-              value: production

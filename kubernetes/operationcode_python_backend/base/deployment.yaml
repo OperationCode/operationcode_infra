@@ -22,8 +22,6 @@ spec:
           value: # Requires overlay
         - name: SITE_ID
           value: "3"
-        - name: DJANGO_ENV
-          value: production
         - name: DB_ENGINE
           value: django.db.backends.postgresql
         - name: DB_NAME
