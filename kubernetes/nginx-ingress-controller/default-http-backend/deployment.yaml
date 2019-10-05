@@ -19,6 +19,13 @@ spec:
         # 1. It serves a 404 page at /
         # 2. It serves 200 on a /healthz endpoint
         image: gcr.io/google_containers/defaultbackend:1.4
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "10m"
+          limits:
+            memory: "500Mi"
+            cpu: "20m"
         livenessProbe:
           httpGet:
             path: /healthz
