@@ -11,6 +11,13 @@ spec:
       - name: app
         image: operationcode/back-end:latest
         imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "10m"
+          limits:
+            memory: "500Mi"
+            cpu: "20m"
         ports:
         - containerPort: 8000
         env:

@@ -14,6 +14,13 @@ spec:
       - name: app
         image: operationcode/town-crier:latest
         imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "10m"
+          limits:
+            memory: "500Mi"
+            cpu: "20m"
         env:
         - name: AIRTABLE_API_KEY
           valueFrom:

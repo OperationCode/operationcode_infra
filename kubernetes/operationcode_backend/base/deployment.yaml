@@ -11,6 +11,13 @@ spec:
       - name: app
         image: operationcode/operationcode_backend:latest
         imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "10m"
+          limits:
+            memory: "500Mi"
+            cpu: "20m"    
         ports:
         - containerPort: 3000
         env:
@@ -96,6 +103,13 @@ spec:
         image: operationcode/operationcode_backend:latest
         command: ["bundle", "exec", "sidekiq"]
         imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "10m"
+          limits:
+            memory: "500Mi"
+            cpu: "20m"
         env:
         - name: POSTGRES_PASSWORD
           valueFrom:

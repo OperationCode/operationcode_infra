@@ -8,6 +8,13 @@ spec:
       containers:
         - name: app
           image: operationcode/back-end:staging
+          resources:
+          requests:
+            memory: "250Mi"
+            cpu: "10m"
+          limits:
+            memory: "500Mi"
+            cpu: "20m"
           env:
             - name: DB_HOST
               value: python-staging.czwauqf3tjaz.us-east-2.rds.amazonaws.com
