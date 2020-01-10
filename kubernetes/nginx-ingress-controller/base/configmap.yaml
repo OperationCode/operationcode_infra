@@ -7,6 +7,7 @@ data:
   use-proxy-protocol: "true"
   hsts-include-subdomains: "false"
   server-name-hash-bucket-size: "256"
+  server-tokens: "false"
 kind: ConfigMap
 metadata:
   name: nginx-configuration
