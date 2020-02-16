@@ -118,6 +118,13 @@ spec:
             secretKeyRef:
               name: python-backend-secrets
               key: github_jwt
+        - name: HONEYCOMB_WRITEKEY
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: honeycomb_writekey
+        - name: HONEYCOMB_DATASET
+          value: production-traces
       volumes:
       - name: python-backend-secrets
         secret:
