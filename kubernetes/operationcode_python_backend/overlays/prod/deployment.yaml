@@ -21,3 +21,5 @@ spec:
               value: "4"
             - name: DJANGO_ENV
               value: production
+            - name: HONEYCOMB_DATASET
+              value: production-traces

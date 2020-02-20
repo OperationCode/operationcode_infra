@@ -17,3 +17,5 @@ spec:
               value: 1.0.1
             - name: DJANGO_ENV
               value: staging
+            - name: HONEYCOMB_DATASET
+              value: staging-traces
