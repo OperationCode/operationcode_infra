@@ -11,3 +11,5 @@ spec:
         env:
         - name: FLASK_ENV
           value: staging
+        - name: HONEYCOMB_DATASET
+          value: staging-traces
