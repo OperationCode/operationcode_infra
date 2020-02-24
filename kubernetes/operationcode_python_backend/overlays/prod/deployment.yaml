@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: back-end
@@ -14,7 +14,7 @@ spec:
             - name: ENVIRONMENT
               value: aws_prod
             - name: EXTRA_HOSTS
-              value: api.operationcode.org
+              value: backend.k8s.operationcode.org
             - name: RELEASE
               value: 1.0.1
             - name: SITE_ID

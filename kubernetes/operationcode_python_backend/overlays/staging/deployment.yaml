@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: back-end
@@ -13,6 +13,8 @@ spec:
               value: python-staging.czwauqf3tjaz.us-east-2.rds.amazonaws.com
             - name: ENVIRONMENT
               value: aws_staging
+            - name: EXTRA_HOSTS
+              value: backend-staging.k8s.operationcode.org
             - name: RELEASE
               value: 1.0.1
             - name: DJANGO_ENV

@@ -9,13 +9,13 @@ spec:
     kind: Deployment
     name: back-end
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: back-end
 spec:
   replicas: 1
-  revisionHistoryLimit: 5
+  revisionHistoryLimit: 1
   template:
     spec:
       containers:
