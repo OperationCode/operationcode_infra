@@ -1,20 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  annotations:
-    kubernetes.io/ingress.class: nginx
-    kubernetes.io/tls-acme: "true"
   name: back-end
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-2:633607774026:certificate/d59d030e-0239-4bfa-8553-e4bafb6481b4
+    alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-2-2017-01
+    external-dns.alpha.kubernetes.io/hostname: backend.k8s.operationcode.org
+  labels:
+    app: back-end
 spec:
   rules:
-  - host: api.operationcode.org
+  - host: backend.k8s.operationcode.org
     http:
       paths:
       - backend:
           serviceName: back-end-service
           servicePort: 80
         path: /
-  tls:
-  - hosts:
-    - api.operationcode.org
-    secretName: back-end-tls
