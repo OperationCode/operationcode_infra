@@ -1,5 +1,6 @@
 # Operation Code Infra
-Platform infrastructure for the Operation Code site.
+
+Platform infrastructure for the Operation Code site, Kops stable support branch
 
 [![CircleCI](https://circleci.com/gh/OperationCode/operationcode_infra/tree/master.svg?style=svg)](https://circleci.com/gh/OperationCode/operationcode_infra/tree/master)
 
