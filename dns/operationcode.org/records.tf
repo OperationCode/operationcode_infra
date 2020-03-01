@@ -25,21 +25,14 @@ resource "dnsimple_record" "api" {
   domain = "${var.hosted-zone}"
   name   = "api"
   type   = "CNAME"
-  value  = "${var.k8s-cluster-ingress}"
+  value  = "backend.k8s.operationcode.org"
 }
 
 resource "dnsimple_record" "staging_api" {
   domain = "${var.hosted-zone}"
   name   = "api.staging"
   type   = "CNAME"
-  value  = "${var.k8s-cluster-ingress}"
-}
-
-resource "dnsimple_record" "dashboards" {
-  domain = "${var.hosted-zone}"
-  name   = "dashboards"
-  type   = "CNAME"
-  value  = "${var.k8s-cluster-ingress}"
+  value  = "backend-staging.k8s.operationcode.org"
 }
 
 resource "dnsimple_record" "pybot" {
@@ -67,19 +60,12 @@ resource "dnsimple_record" "resources_api" {
   domain = "${var.hosted-zone}"
   name   = "resources"
   type   = "CNAME"
-  value  = "${var.k8s-cluster-ingress}"
+  value  = "resources.k8s.operationcode.org"
 }
 
 resource "dnsimple_record" "resources_staging_api" {
   domain = "${var.hosted-zone}"
   name   = "resources.staging"
   type   = "CNAME"
-  value  = "${var.k8s-cluster-ingress}"
-}
-
-resource "dnsimple_record" "python_backend_dev" {
-  domain = "${var.hosted-zone}"
-  name   = "api.dev"
-  type   = "CNAME"
-  value  = "${var.k8s-cluster-ingress}"
+  value  = "resources-staging.k8s.operationcode.org"
 }
