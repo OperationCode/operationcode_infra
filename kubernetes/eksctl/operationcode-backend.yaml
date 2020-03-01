@@ -1,0 +1,45 @@
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: operationcode-backend
+  region: us-east-2
+
+fargateProfiles:
+  - name: fp-default
+    selectors:
+      - namespace: default
+      - namespace: kube-system
+  - name: operationcode-backends
+    selectors:
+      - namespace: operationcode
+      - namespace: operationcode-staging
+
+managedNodeGroups:
+  - name: eks-infra-nodes
+    minSize: 1
+    desiredCapacity: 1
+    maxSize: 2
+    instanceType: t3a.small
+    volumeSize: 20
+    ssh:
+      allow: true
+      publicKeyName: oc-ops
+    labels:
+      nodegroup-type: infra
+    tags:
+      Name: eks-infra-nodes
+    iam:
+      withAddonPolicies:
+        imageBuilder: true
+        autoScaler: true
+        externalDNS: true
+        certManager: true
+        appMesh: true
+        ebs: true
+        fsx: true
+        efs: true
+        albIngress: true
+        xRay: true
+        cloudWatch: true
