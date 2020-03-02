@@ -4,7 +4,7 @@ metadata:
   name: resources-api
   annotations:
     kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-2:633607774026:certificate/d59d030e-0239-4bfa-8553-e4bafb6481b4
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-2:633607774026:certificate/8de9fd02-191c-485f-b952-e5ba32e90acb
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-2-2017-01
