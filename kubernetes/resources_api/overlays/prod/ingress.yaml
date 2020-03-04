@@ -5,6 +5,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-2:633607774026:certificate/8de9fd02-191c-485f-b952-e5ba32e90acb
+    alb.ingress.kubernetes.io/healthcheck-path: /healthz
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-2-2017-01
@@ -20,4 +21,10 @@ spec:
         backend:
           serviceName: resources-api-service
           servicePort: 80
-
+  - host: resources.operationcode.org
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: resources-api-service
+          servicePort: 80
