@@ -9,3 +9,6 @@ bases:
 resources:
 - ingress.yaml
 - database-service.yaml
+
+patchesStrategicMerge:
+  - deployment.yaml
