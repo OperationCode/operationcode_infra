@@ -16,12 +16,17 @@ fargateProfiles:
       - namespace: operationcode
       - namespace: operationcode-staging
 
-managedNodeGroups:
-  - name: eks-infra-nodes
-    minSize: 1
-    desiredCapacity: 1
-    maxSize: 2
-    instanceType: t3a.small
+nodeGroups:
+  - name: eks-infra-spot
+    minSize: 3
+    desiredCapacity: 3
+    maxSize: 5
+    # use Spot instance pricing
+    instancesDistribution:
+      instanceTypes:
+      - t3.small
+      onDemandBaseCapacity: 0
+      onDemandPercentageAboveBaseCapacity: 0
     volumeSize: 20
     ssh:
       allow: true
@@ -29,7 +34,7 @@ managedNodeGroups:
     labels:
       nodegroup-type: infra
     tags:
-      Name: eks-infra-nodes
+      Name: eks-infra-spot
     iam:
       withAddonPolicies:
         imageBuilder: true
