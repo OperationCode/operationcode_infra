@@ -6,16 +6,6 @@ metadata:
   name: operationcode-backend
   region: us-east-2
 
-fargateProfiles:
-  - name: fp-default
-    selectors:
-      - namespace: default
-      - namespace: kube-system
-  - name: operationcode-backends
-    selectors:
-      - namespace: operationcode
-      - namespace: operationcode-staging
-
 nodeGroups:
   - name: eks-infra-spot
     minSize: 3
