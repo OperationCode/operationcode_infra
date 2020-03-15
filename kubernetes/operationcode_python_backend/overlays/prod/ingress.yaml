@@ -9,11 +9,11 @@ metadata:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-2-2017-01
-    external-dns.alpha.kubernetes.io/hostname: backend.k8s.operationcode.org
   labels:
     app: back-end
 spec:
   rules:
+  # back-end production
   - host: backend.k8s.operationcode.org
     http:
       paths:
@@ -27,4 +27,19 @@ spec:
       - path: /*
         backend:
           serviceName: back-end-service
+          servicePort: 80
+  # resources-api production
+  - host: resources.k8s.operationcode.org
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: resources-api-service
+          servicePort: 80
+  - host: resources.operationcode.org
+    http:
+      paths:
+      - path: /*
+        backend:
+          serviceName: resources-api-service
           servicePort: 80
