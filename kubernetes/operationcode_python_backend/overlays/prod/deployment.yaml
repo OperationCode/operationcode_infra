@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: back-end
 spec:
+  replicas: 2
   template:
     spec:
       containers:
