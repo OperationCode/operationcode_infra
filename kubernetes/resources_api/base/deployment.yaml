@@ -21,8 +21,8 @@ spec:
       containers:
       - name: app
         image: operationcode/resources-api:latest
-        command: ["flask"]
-        args: ["run", "-h", "0.0.0.0"]
+        command: ["uwsgi"]
+        args: ["--ini", "app.ini"]
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
