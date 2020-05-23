@@ -45,6 +45,10 @@ spec:
         backend:
           serviceName: response-401
           servicePort: use-annotation
+      - path: /metrics/*
+        backend:
+          serviceName: response-401
+          servicePort: use-annotation
       - path: /*
         backend:
           serviceName: resources-api-service
@@ -53,6 +57,10 @@ spec:
     http:
       paths:
       - path: /metrics
+        backend:
+          serviceName: response-401
+          servicePort: use-annotation
+      - path: /metrics/*
         backend:
           serviceName: response-401
           servicePort: use-annotation
