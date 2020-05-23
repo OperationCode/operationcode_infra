@@ -45,10 +45,6 @@ spec:
         backend:
           serviceName: response-401
           servicePort: use-annotation
-      - path: /healthz
-        backend:
-          serviceName: response-401
-          servicePort: use-annotation
       - path: /*
         backend:
           serviceName: resources-api-service
@@ -56,6 +52,10 @@ spec:
   - host: resources.staging.operationcode.org
     http:
       paths:
+      - path: /metrics
+        backend:
+          serviceName: response-401
+          servicePort: use-annotation
       - path: /*
         backend:
           serviceName: resources-api-service
