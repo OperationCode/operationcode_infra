@@ -152,6 +152,16 @@ spec:
               key: honeycomb_writekey
         - name: HONEYCOMB_DATASET
           value: production-traces
+        - name: JWT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: jwt_secret_key
+        - name: JWT_PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: python-backend-secrets
+              key: jwt_public_key
       volumes:
       - name: python-backend-secrets
         secret:
