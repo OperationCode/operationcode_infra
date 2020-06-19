@@ -64,6 +64,11 @@ spec:
               key: honeycomb_writekey
         - name: HONEYCOMB_DATASET
           value: production-traces
+        - name: JWT_PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: resources-api-secrets
+              key: jwt_public_key
       volumes:
       - name: resources-api-secrets
         secret:
