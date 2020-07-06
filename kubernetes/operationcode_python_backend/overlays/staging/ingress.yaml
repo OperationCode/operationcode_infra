@@ -41,10 +41,6 @@ spec:
   - host: resources-staging.k8s.operationcode.org
     http:
       paths:
-        - path: /faketestdestination
-        backend:
-          serviceName: response-401
-          servicePort: use-annotation
       - path: /metrics
         backend:
           serviceName: response-401
