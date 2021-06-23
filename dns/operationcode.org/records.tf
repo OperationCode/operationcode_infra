@@ -56,6 +56,13 @@ resource "dnsimple_record" "staging_pybot_cert_verification" {
   value  = "_9fdd906cbd86d545894523f8cd809812.ltfvzjuylp.acm-validations.aws"
 }
 
+resource "dnsimple_record" "qa_pybot_cert_verification" {
+  domain = "${var.hosted-zone}"
+  name   = "_037e6ed502a36d6a457bafe40ec0f7e4.pybot.qa.operationcode.org."
+  type   = "CNAME"
+  value  = "_25bac267a2f0d12eb4cb47a487e276c5.gwpjclltnz.acm-validations.aws."
+}
+
 resource "dnsimple_record" "resources_api" {
   domain = "${var.hosted-zone}"
   name   = "resources"
