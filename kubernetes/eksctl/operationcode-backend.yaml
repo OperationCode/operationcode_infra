@@ -6,25 +6,27 @@ metadata:
   name: operationcode-backend
   region: us-east-2
 
-nodeGroups:
-  - name: eks-infra-spot
+managedNodeGroups:
+  - name: eks-infra-spot-v2
+    instanceTypes:
+    - t3.small
+    spot: true
     minSize: 3
     desiredCapacity: 3
     maxSize: 5
-    # use Spot instance pricing
-    instancesDistribution:
-      instanceTypes:
-      - t3.small
-      onDemandBaseCapacity: 0
-      onDemandPercentageAboveBaseCapacity: 0
     volumeSize: 20
+    volumeType: gp3
+    # For this to be valid, run:
+    #   kubectl set env daemonset aws-node -n kube-system ENABLE_PREFIX_DELEGATION=true
+    #   kubectl set env daemonset aws-node -n kube-system WARM_PREFIX_TARGET=1
+    maxPodsPerNode: 30
     ssh:
       allow: true
       publicKeyName: oc-ops
     labels:
       nodegroup-type: infra
     tags:
-      Name: eks-infra-spot
+      Name: eks-infra-spot-v2
     iam:
       withAddonPolicies:
         imageBuilder: true

@@ -1,14 +1,4 @@
 ---
-apiVersion: "autoscaling.k8s.io/v1beta2"
-kind: VerticalPodAutoscaler
-metadata:
-  name: town-crier-vpa
-spec:
-  targetRef:
-    apiVersion: "apps/v1"
-    kind: Deployment
-    name: town-crier
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:

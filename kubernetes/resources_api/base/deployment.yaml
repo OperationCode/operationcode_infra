@@ -1,14 +1,4 @@
 ---
-apiVersion: "autoscaling.k8s.io/v1beta2"
-kind: VerticalPodAutoscaler
-metadata:
-  name: resources-api-vpa
-spec:
-  targetRef:
-    apiVersion: "apps/v1"
-    kind: Deployment
-    name: resources-api
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
