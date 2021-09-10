@@ -1,0 +1,63 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pybot
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  template:
+    spec:
+      containers:
+      - name: app
+        image: operationcode/pybot:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            memory: 200Mi
+            cpu: 100m
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        env:
+        - name: COMMUNITY_CHANNEL
+          value: # Requires overlay
+        - name: MENTOR_CHANNEL
+          value: # Requires overlay
+        - name: TICKET_CHANNEL
+          value: # Requires overlay
+        - name: SLACK_BOT_SIGNING_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: SLACK_BOT_SIGNING_SECRET
+        - name: BOT_USER_OAUTH_ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: BOT_USER_OAUTH_ACCESS_TOKEN
+        - name: AIRTABLE_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: AIRTABLE_API_KEY
+        - name: AIRTABLE_BASE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: AIRTABLE_BASE_KEY
+      volumes:
+      - name: pybot-secrets
+        secret:
+          secretName: pybot-secrets
