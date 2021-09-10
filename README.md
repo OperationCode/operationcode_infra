@@ -18,7 +18,11 @@ Greetings! Much of Operation Code's web site runs in a [Kubernetes](https://kube
 1. Ensure you have [AWS](https://aws.amazon.com) access, and the [aws CLI](https://aws.amazon.com/cli/) is operating correctly
 2. Install eksctl: https://eksctl.io/introduction/#installation
 3. Run: `eksctl utils write-kubeconfig --region us-east-2 --cluster operationcode-backend`
-4. Verify everything works: `kubectl get namespaces`
+4. Ensure `kubectl` is working by running `kubectl version`, refer to [Kubectl Install Docs](https://kubernetes.io/docs/tasks/tools/#kubectl) 
+
+    Note: if there are issues refer to this [SO Post](https://stackoverflow.com/questions/55360666/kubernetes-kubectl-run-command-not-found)
+
+5. Verify everything works: `kubectl get namespaces`
 
 
 ## Licensing
