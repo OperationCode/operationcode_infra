@@ -10,43 +10,53 @@ spec:
     spec:
       containers:
       - name: app
-        image: operationcode/pybot:latest
+        image: 633607774026.dkr.ecr.us-east-2.amazonaws.com/pybot:master
         imagePullPolicy: Always
         ports:
-        - containerPort: 8000
+        - containerPort: 5000
         resources:
           requests:
             memory: 200Mi
             cpu: 100m
         readinessProbe:
           httpGet:
-            path: /healthz
-            port: 8000
+            path: /health
+            port: 5000
           initialDelaySeconds: 5
           periodSeconds: 10
         livenessProbe:
           httpGet:
-            path: /healthz
-            port: 8000
+            path: /health
+            port: 5000
           initialDelaySeconds: 15
           periodSeconds: 20
         env:
+        - name: BACKEND_URL
+          value: # Requires overlay
+        - name: BACKEND_USERNAME
+          value: # Requires overlay  
         - name: COMMUNITY_CHANNEL
+          value: # Requires overlay
+        - name: BACKEND_URL
           value: # Requires overlay
         - name: MENTOR_CHANNEL
           value: # Requires overlay
+        - name: MODERATOR_CHANNEL
+          value: # Requires overlay
+        - name: PYBOT_ENV
+          value: # Requires overlay
+        - name: PYBACK_HOST
+          value: # Requires overlay
+        - name: PYBACK_PORT
+          value: # Requires overlay
+        - name: SENTRY_DSN
+          value: # Requires overlay
+        - name: SLACK_BOT_ID
+          value: # Requires overlay
+        - name: SLACK_USER_ID
+          value: # Requires overlay
         - name: TICKET_CHANNEL
           value: # Requires overlay
-        - name: SLACK_BOT_SIGNING_SECRET
-          valueFrom:
-            secretKeyRef:
-              name: pybot-secrets
-              key: SLACK_BOT_SIGNING_SECRET
-        - name: BOT_USER_OAUTH_ACCESS_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: pybot-secrets
-              key: BOT_USER_OAUTH_ACCESS_TOKEN
         - name: AIRTABLE_API_KEY
           valueFrom:
             secretKeyRef:
@@ -57,6 +67,61 @@ spec:
             secretKeyRef:
               name: pybot-secrets
               key: AIRTABLE_BASE_KEY
+        - name: AIRTABLE_VERIFY
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: AIRTABLE_VERIFY
+        - name: APP_ADMIN_OAUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: AIRTABLE_VERIFY
+        - name: APP_ADMIN_OAUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: AIRTABLE_VERIFY
+        - name: BACKEND_AUTH_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: BACKEND_AUTH_TOKEN
+        - name: BACKEND_PASS
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: BACKEND_PASS
+        - name: BOT_USER_OAUTH_ACCESS_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: BOT_USER_OAUTH_ACCESS_TOKEN
+        - name: PYBACK_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: PYBACK_TOKEN
+        - name: SLACK_BOT_SIGNING_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: SLACK_BOT_SIGNING_SECRET
+        - name: SLACK_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: SLACK_TOKEN
+        - name: VERIFICATION_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: VERIFICATION_TOKEN
+        - name: YELP_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: pybot-secrets
+              key: YELP_TOKEN
       volumes:
       - name: pybot-secrets
         secret:

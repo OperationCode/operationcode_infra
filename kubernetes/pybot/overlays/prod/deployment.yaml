@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pybot
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: app
+          image: operationcode/pybot:master
+          env:
+            - name: BACKEND_URL
+              value: https://api.operationcode.org
+            - name: BACKEND_USERNAME
+              value: pybot@operationcode.org     
+            - name: COMMUNITY_CHANNEL
+              value: G3MD48QTD
+            - name: MENTOR_CHANNEL
+              value: G04CRMCT4
+            - name: MODERATOR_CHANNEL
+              value: GDUQK263D
+            - name: PYBACK_HOST
+              value: pyback-lb-197482116.us-east-2.elb.amazonaws.com
+            - name: PYBACK_PORT
+              value: 80
+            - name: SENTRY_DSN
+              value: https://8659699a82844360b34cfb1cd5f53629:28e0241b01474eb4a4920fb361fd0e4e@sentry.io/1281907
+            - name: SLACK_BOT_ID
+              value: U85GUNZNX
+            - name: SLACK_BOT_USER_ID
+              value: U85GUNZNX
+            - name: PYBOT_ENV
+              value: PRODUCTION
+            - name: TICKET_CHANNEL
+              value: G9NKES3ME

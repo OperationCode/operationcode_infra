@@ -9,9 +9,27 @@ spec:
         - name: app
           image: operationcode/pybot:staging
           env:
+            - name: BACKEND_URL
+              value: https://api.staging.operationcode.org
+            - name: BACKEND_USERNAME
+              value: Pybot@test.test
             - name: COMMUNITY_CHANNEL
-              value: # TODO: Get values from Allen
+              value: GJBH2A60N
+            - name: ENVIRONMENT
+              value: staging
             - name: MENTOR_CHANNEL
-              value: # TODO: Get values from Allen
+              value: GHXU0NAAF
+            - name: MODERATOR_CHANNEL
+              value: GHXU0FRK5
+            - name: PYBACK_HOST
+              value: pybot.operationcode.org
+            - name: PYBACK_PORT
+              value: 8080
+            - name: SENTRY_DSN
+              value: https://8659699a82844360b34cfb1cd5f53629@sentry.io/1281907
+            - name: SLACK_BOT_ID
+              value: BJ335PD25
+            - name: SLACK_BOT_USER_ID
+              value: BJ335PD25
             - name: TICKET_CHANNEL
-              value: # TODO: Get values from Allan
+              value: GJ9CP34DN

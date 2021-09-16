@@ -24,3 +24,12 @@ spec:
               value: production
             - name: HONEYCOMB_DATASET
               value: production-traces
+            - name: SLACK_VERIFY
+              valueFrom:
+                secretKeyRef:
+                  name: pybot-secrets
+                  key: SLACK_VERIFY
+        volumes:
+          - name: pybot-secrets
+            secret:
+              secretName: pybot-secrets
