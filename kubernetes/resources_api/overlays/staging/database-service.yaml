@@ -4,4 +4,4 @@ metadata:
   name: resources-postgres
 spec:
   type: ExternalName
-  externalName: python-staging.czwauqf3tjaz.us-east-2.rds.amazonaws.com
+  externalName: staging-postgres.pgo.svc.cluster.local

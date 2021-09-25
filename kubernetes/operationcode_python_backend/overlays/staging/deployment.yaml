@@ -10,7 +10,7 @@ spec:
           image: operationcode/back-end:staging
           env:
             - name: DB_HOST
-              value: python-staging.czwauqf3tjaz.us-east-2.rds.amazonaws.com
+              value: postgres.pgo.svc.cluster.local
             - name: ENVIRONMENT
               value: aws_staging
             - name: EXTRA_HOSTS
