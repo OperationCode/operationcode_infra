@@ -18,8 +18,8 @@ rules:
 - apiGroups: [""]
   resources: ["pods"]
   verbs: ["get","watch","list"]
-- apiGroups: ["extensions"] 
-  resources: ["ingresses"] 
+- apiGroups: ["extensions"]
+  resources: ["ingresses"]
   verbs: ["get","watch","list"]
 - apiGroups: [""]
   resources: ["nodes"]
@@ -44,6 +44,9 @@ metadata:
   name: external-dns
   namespace: kube-system
 spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: external-dns
@@ -54,19 +57,27 @@ spec:
       labels:
         app: external-dns
     spec:
-      serviceAccountName: external-dns
       containers:
-      - name: external-dns
-        image: us.gcr.io/k8s-artifacts-prod/external-dns/external-dns:v0.6.0
-        args:
+      - args:
         - --source=service
         - --source=ingress
         - --domain-filter=k8s.operationcode.org
         - --provider=aws
-        - --policy=upsert-only # would prevent ExternalDNS from deleting any records, omit to enable full synchronization
-        - --aws-zone-type=public # only look at public hosted zones (valid values are public, private or no value for both)
+        - --policy=upsert-only
+        - --aws-zone-type=public
         - --registry=txt
         - --txt-owner-id=operationcode-backend
-        # - --log-level=debug
+        image: k8s.gcr.io/external-dns/external-dns:v0.10.1
+        imagePullPolicy: IfNotPresent
+        name: external-dns
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
       securityContext:
-        fsGroup: 65534 # For ExternalDNS to be able to read Kubernetes and AWS token files
+        fsGroup: 65534
+      serviceAccount: external-dns
+      serviceAccountName: external-dns
+      terminationGracePeriodSeconds: 30

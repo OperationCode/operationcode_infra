@@ -1,0 +1,58 @@
+# NOTE: don't use this config, it's stored here for backup purposes only
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::633607774026:role/eksctl-operationcode-backend-addon-iamservic-Role1-1GSX777BO4V1M
+  labels:
+    app.kubernetes.io/name: alb-ingress-controller
+  name: alb-ingress-controller
+  namespace: kube-system
+secrets:
+- name: alb-ingress-controller-token-vp277
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: alb-ingress-controller
+  name: alb-ingress-controller
+  namespace: kube-system
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: alb-ingress-controller
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: alb-ingress-controller
+    spec:
+      containers:
+      - args:
+        - --ingress-class=alb
+        - --cluster-name=operationcode-backend
+        - --aws-vpc-id=vpc-027c7899183a507d5
+        - --aws-region=us-east-2
+        image: docker.io/amazon/aws-alb-ingress-controller:v1.1.9
+        imagePullPolicy: IfNotPresent
+        name: alb-ingress-controller
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: alb-ingress-controller
+      serviceAccountName: alb-ingress-controller
+      terminationGracePeriodSeconds: 30
