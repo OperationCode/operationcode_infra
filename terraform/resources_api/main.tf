@@ -1,6 +1,5 @@
-
 data "aws_secretsmanager_secret" "ecs" {
-  name = "${var.env}/python_backend"
+  name = "${var.env}/resources_api"
 }
 
 data "aws_secretsmanager_secret_version" "ecs-secrets" {
@@ -12,7 +11,7 @@ locals {
 
   # CHANGEME once infra scales up
   cpu    = var.env == "prod" ? 256 : 256
-  memory = var.env == "prod" ? 512 : 256
+  memory = var.env == "prod" ? 256 : 128
   count  = var.env == "prod" ? 1 : 1
 
 
@@ -23,8 +22,8 @@ locals {
 }
 
 
-resource "aws_ecs_task_definition" "python_backend" {
-  family             = "python_backend_${var.env}"
+resource "aws_ecs_task_definition" "resources_api" {
+  family             = "resources_api_${var.env}"
   execution_role_arn = var.task_execution_role
   network_mode       = "bridge"
   cpu                = local.cpu
@@ -32,13 +31,13 @@ resource "aws_ecs_task_definition" "python_backend" {
 
   container_definitions = jsonencode([
     {
-      name      = "python_backend_${var.env}"
-      image     = "operationcode/back-end:latest"
+      name      = "resources_api_${var.env}"
+      image     = "operationcode/resources-api:latest"
       essential = true
 
       portMappings = [
         {
-          containerPort = 8000
+          containerPort = 5000
           hostPort      = 0
           protocol      = "tcp"
         }
@@ -49,45 +48,9 @@ resource "aws_ecs_task_definition" "python_backend" {
         options = {
           awslogs-group         = var.logs_group
           awslogs-region        = "us-east-2"
-          awslogs-stream-prefix = "python_backend_${var.env}"
+          awslogs-stream-prefix = "resources_api_${var.env}"
         }
       }
-
-
-      environment = [
-        {
-          "name" : "ENVIRONMENT",
-          "value" : "aws_ecs_${var.env}"
-        },
-        {
-          "name" : "EXTRA_HOSTS",
-          "value" : "*"
-        },
-        {
-          "name" : "RELEASE",
-          "value" : "1.0.1"
-        },
-        {
-          "name" : "SITE_ID",
-          "value" : "4"
-        },
-        {
-          "name" : "DJANGO_ENV",
-          "value" : "${local.long_env_name}"
-        },
-        {
-          "name" : "GITHUB_REPO",
-          "value" : "operationcode/back-end"
-        },
-        {
-          "name" : "HONEYCOMB_DATASET",
-          "value" : "${local.long_env_name}-traces"
-        },
-        {
-          "name" : "DB_ENGINE",
-          "value" : "django.db.backends.postgresql"
-        },
-      ]
 
       secrets = local.secrets_env
 
@@ -96,10 +59,10 @@ resource "aws_ecs_task_definition" "python_backend" {
   }])
 }
 
-resource "aws_ecs_service" "python_backend" {
-  name            = "python_backend_${var.env}"
+resource "aws_ecs_service" "resources_api" {
+  name            = "resources_api_${var.env}"
   cluster         = var.ecs_cluster_id
-  task_definition = aws_ecs_task_definition.python_backend.arn
+  task_definition = aws_ecs_task_definition.resources_api.arn
 
   desired_count = local.count
 
@@ -122,23 +85,23 @@ resource "aws_ecs_service" "python_backend" {
   }
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.python_backend.arn
-    container_name   = "python_backend_${var.env}"
-    container_port   = 8000
+    target_group_arn = aws_lb_target_group.resources_api.arn
+    container_name   = "resources_api_${var.env}"
+    container_port   = 5000
   }
 }
 
 # Load balancer Target group
-resource "aws_lb_target_group" "python_backend" {
-  name = "ecs-python-backend-${var.env}"
+resource "aws_lb_target_group" "resources_api" {
+  name = "ecs-resources-api-${var.env}"
 
-  port        = 8000
+  port        = 5000
   protocol    = "HTTP"
   vpc_id      = var.vpc_id
   target_type = "instance"
 
   health_check {
-    path                = "/"
+    path                = "/healthz"
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2
