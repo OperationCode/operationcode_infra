@@ -33,7 +33,7 @@ resource "aws_ecs_task_definition" "python_backend" {
   container_definitions = jsonencode([
     {
       name      = "python_backend_${var.env}"
-      image     = "operationcode/back-end:latest"
+      image     = "operationcode/back-end:${var.image_tag}"
       essential = true
 
       portMappings = [
@@ -138,7 +138,7 @@ resource "aws_lb_target_group" "python_backend" {
   target_type = "instance"
 
   health_check {
-    path                = "/"
+    path                = "/healthz"
     interval            = 30
     timeout             = 5
     healthy_threshold   = 2

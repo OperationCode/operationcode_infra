@@ -27,6 +27,7 @@ module "python_backend_prod" {
   logs_group          = aws_cloudwatch_log_group.ecslogs.name
   ecs_cluster_id      = module.ecs.cluster_id
   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
+  image_tag           = "master"
 }
 
 resource "aws_lb_listener_rule" "python_backend_prod" {
@@ -53,6 +54,7 @@ module "python_backend_staging" {
   logs_group          = aws_cloudwatch_log_group.ecslogs.name
   ecs_cluster_id      = module.ecs.cluster_id
   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
+  image_tag           = "staging"
 }
 
 resource "aws_lb_listener_rule" "python_backend_staging" {
@@ -79,6 +81,7 @@ module "resources_api_prod" {
   logs_group          = aws_cloudwatch_log_group.ecslogs.name
   ecs_cluster_id      = module.ecs.cluster_id
   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
+  image_tag           = "202b27d4a8be4418089469e1c79e04277268962e"
 }
 
 resource "aws_lb_listener_rule" "resources_api_prod" {
@@ -105,6 +108,7 @@ module "resources_api_staging" {
   logs_group          = aws_cloudwatch_log_group.ecslogs.name
   ecs_cluster_id      = module.ecs.cluster_id
   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
+  image_tag           = "fb8c59d54a5a4aed9f9cf58144eecee69f9fc58e"
 }
 
 resource "aws_lb_listener_rule" "resources_api_staging" {

@@ -23,3 +23,9 @@ variable "task_execution_role" {
   type        = string
   description = "The name of the ECS task execution role"
 }
+
+variable "image_tag" {
+  type        = string
+  description = "The tag of the image to deploy"
+  default     = "latest"
+}

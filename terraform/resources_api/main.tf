@@ -32,7 +32,7 @@ resource "aws_ecs_task_definition" "resources_api" {
   container_definitions = jsonencode([
     {
       name      = "resources_api_${var.env}"
-      image     = "operationcode/resources-api:latest"
+      image     = "operationcode/resources-api:${var.image_tag}"
       essential = true
 
       portMappings = [
