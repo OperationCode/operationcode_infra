@@ -22,10 +22,10 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_attach" {
 module "python_backend_prod" {
   source = "./python_backend"
 
-  env         = "prod"
-  vpc_id      = data.aws_vpc.use2.id
-  logs_group  = aws_cloudwatch_log_group.ecslogs.name
-  ecs_cluster_id = module.ecs.cluster_id
+  env                 = "prod"
+  vpc_id              = data.aws_vpc.use2.id
+  logs_group          = aws_cloudwatch_log_group.ecslogs.name
+  ecs_cluster_id      = module.ecs.cluster_id
   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
 }
 
@@ -48,10 +48,10 @@ resource "aws_lb_listener_rule" "python_backend_prod" {
 module "python_backend_staging" {
   source = "./python_backend"
 
-  env         = "staging"
-  vpc_id      = data.aws_vpc.use2.id
-  logs_group  = aws_cloudwatch_log_group.ecslogs.name
-  ecs_cluster_id = module.ecs.cluster_id
+  env                 = "staging"
+  vpc_id              = data.aws_vpc.use2.id
+  logs_group          = aws_cloudwatch_log_group.ecslogs.name
+  ecs_cluster_id      = module.ecs.cluster_id
   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
 }
 

@@ -9,10 +9,17 @@ data "aws_secretsmanager_secret_version" "ecs-secrets" {
 
 locals {
   long_env_name = var.env == "prod" ? "production" : var.env
+
+  # CHANGEME once infra scales up
+  cpu    = var.env == "prod" ? 256 : 256
+  memory = var.env == "prod" ? 512 : 128
+  count  = var.env == "prod" ? 1 : 1
+
+
   # Takes all of the keys from the secret manager k/v store and turns them into a map suitable for use in the container definition
   # manage at https://us-east-2.console.aws.amazon.com/secretsmanager/listsecrets?region=us-east-2
-  secrets = jsondecode(data.aws_secretsmanager_secret_version.ecs-secrets.secret_string)
-  secrets_env = nonsensitive(toset([for i,v in local.secrets: tomap({"name" = upper(i), "valueFrom" = "${data.aws_secretsmanager_secret.ecs.arn}:${i}::"})]))
+  secrets     = jsondecode(data.aws_secretsmanager_secret_version.ecs-secrets.secret_string)
+  secrets_env = nonsensitive(toset([for i, v in local.secrets : tomap({ "name" = upper(i), "valueFrom" = "${data.aws_secretsmanager_secret.ecs.arn}:${i}::" })]))
 }
 
 
@@ -20,8 +27,8 @@ resource "aws_ecs_task_definition" "python_backend" {
   family             = "python_backend_${var.env}"
   execution_role_arn = var.task_execution_role
   network_mode       = "bridge"
-  cpu                = 256
-  memory             = 512
+  cpu                = local.cpu
+  memory             = local.memory
 
   container_definitions = jsonencode([
     {
@@ -94,7 +101,7 @@ resource "aws_ecs_service" "python_backend" {
   cluster         = var.ecs_cluster_id
   task_definition = aws_ecs_task_definition.python_backend.arn
 
-  desired_count = 1
+  desired_count = local.count
 
   deployment_maximum_percent         = 100
   deployment_minimum_healthy_percent = 0

@@ -65,7 +65,7 @@ module "autoscaling_sg" {
   # Inbound admin ssh
   ingress_with_cidr_blocks = [
     {
-      rule = "ssh-tcp"
+      rule        = "ssh-tcp"
       cidr_blocks = "73.37.119.155/32"
     }
   ]
@@ -74,9 +74,9 @@ module "autoscaling_sg" {
   ingress_with_source_security_group_id = [
     {
       source_security_group_id = aws_security_group.lb_security_group.id
-      from_port = 1024
-      to_port = 65535
-      protocol= "tcp"
+      from_port                = 1024
+      to_port                  = 65535
+      protocol                 = "tcp"
     }
   ]
 
