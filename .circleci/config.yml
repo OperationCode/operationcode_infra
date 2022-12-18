@@ -1,77 +1,14 @@
-version: 2
-jobs:
-  validate:
-    docker:
-      - image: hashicorp/terraform:0.11.14
-
-    steps:
-      - checkout
-
-      - run:
-          command: |
-            mkdir bin
-            curl -sSL https://github.com/gruntwork-io/terragrunt/releases/download/v0.18.3/terragrunt_linux_amd64 -o bin/terragrunt
-            chmod +x bin/terragrunt
-
-      - run:
-          command: |
-            cd dns/operationcode.net/
-            /root/project/bin/terragrunt validate
-
-      - save_cache:
-          key: terragrunt
-          paths:
-            - bin/terragrunt
-
-  plan:
-    docker:
-      - image: hashicorp/terraform:0.11.14
-    steps:
-      - checkout
-
-      - restore_cache:
-          key: terragrunt
-          paths:
-            - bin/terragrunt
-
-      - run:
-          name: terraform plan
-          command: |
-            /root/project/bin/terragrunt plan-all
-
-      - save_cache:
-          key: terragrunt
-          paths:
-            - bin/terragrunt
-
-  apply:
-    docker:
-      - image: hashicorp/terraform:0.11.14
-    steps:
-      - checkout
-
-      - restore_cache:
-          key: terragrunt
-          paths:
-            - bin/terragrunt
-
-      - run:
-          name: terraform apply
-          command: |
-            /root/project/bin/terragrunt apply-all --terragrunt-non-interactive
-
+version: '2.1'
+orbs:
+  terraform: circleci/terraform@3.1
 workflows:
-  version: 2
-  terraform:
+  deploy_infrastructure:
     jobs:
-      - validate
-      - plan:
+      - terraform/fmt:
+          checkout: true
+          context: terraform
+      - terraform/validate:
+          checkout: true
+          context: terraform
           requires:
-            - validate
-      - apply:
-          requires:
-            - validate
-            - plan
-          filters:
-            branches:
-              only: main
+            - terraform/fmt
