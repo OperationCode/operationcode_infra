@@ -125,3 +125,37 @@ resource "aws_lb_listener_rule" "resources_api_staging" {
     }
   }
 }
+
+
+# Pybot staging
+module "pybot_staging" {
+  source = "./pybot"
+
+  env                 = "staging"
+  vpc_id              = data.aws_vpc.use2.id
+  logs_group          = aws_cloudwatch_log_group.ecslogs.name
+  ecs_cluster_id      = module.ecs.cluster_id
+  task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
+  image_tag           = "staging"
+}
+
+resource "aws_lb_listener_rule" "pybot_staging" {
+  listener_arn = aws_lb_listener.default_https.arn
+
+  action {
+    type             = "forward"
+    target_group_arn = module.pybot_staging.lb_tg_arn
+  }
+
+  condition {
+    host_header {
+      values = ["pybot.staging.operationcode.org"]
+    }
+  }
+
+  condition {
+    path_pattern {
+      values = ["/slack/*", "/pybot/*", "/airtable/*"]
+    }
+  }
+}
