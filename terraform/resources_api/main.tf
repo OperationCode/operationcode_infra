@@ -11,7 +11,7 @@ locals {
 
   # CHANGEME once infra scales up
   cpu    = var.env == "prod" ? 256 : 256
-  memory = var.env == "prod" ? 256 : 128
+  memory = var.env == "prod" ? 512 : 256
   count  = var.env == "prod" ? 1 : 1
 
 
