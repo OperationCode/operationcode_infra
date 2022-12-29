@@ -28,6 +28,7 @@ locals {
 # ECS Module
 ################################################################################
 
+# https://registry.terraform.io/modules/terraform-aws-modules/ecs/aws/latest
 module "ecs" {
   source  = "terraform-aws-modules/ecs/aws"
   version = "~> 4.0"
@@ -58,12 +59,12 @@ module "ecs" {
   autoscaling_capacity_providers = {
     spot_instances = {
       auto_scaling_group_arn         = module.autoscaling.autoscaling_group_arn
-      managed_termination_protection = "ENABLED"
+      managed_termination_protection = "DISABLED"
 
       managed_scaling = {
         maximum_scaling_step_size = 3
         minimum_scaling_step_size = 1
-        status                    = "ENABLED"
+        status                    = "DISABLED"
         target_capacity           = 80
       }
 
