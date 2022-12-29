@@ -12,8 +12,8 @@ module "autoscaling" {
   name             = "${local.name}-spot"
   instance_type    = "t3.small"
   min_size         = 1
-  max_size         = 3
-  desired_capacity = 2
+  max_size         = 2
+  desired_capacity = 1
   instance_market_options = {
     market_type = "spot"
   }
