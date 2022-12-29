@@ -42,6 +42,20 @@ module "autoscaling" {
     }
   ]
 
+  block_device_mappings = [
+    {
+      # Root volume
+      device_name = "/dev/xvda"
+      no_device   = 0
+      ebs = {
+        delete_on_termination = true
+        encrypted             = false
+        volume_size           = 30
+        volume_type           = "gp3"
+      }
+    }
+  ]
+
   # https://github.com/hashicorp/terraform-provider-aws/issues/12582
   autoscaling_group_tags = {
     AmazonECSManaged = true
