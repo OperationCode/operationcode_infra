@@ -64,6 +64,9 @@ module "autoscaling" {
   # Required for  managed_termination_protection = "ENABLED"
   protect_from_scale_in = false
 
+  # reduce cloudwatch costs
+  enable_monitoring = false
+
   tags = local.tags
 }
 

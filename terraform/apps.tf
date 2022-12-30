@@ -189,3 +189,36 @@ resource "aws_lb_listener_rule" "shutdown_sites_redirector" {
 #     }
 #   }
 # }
+
+# Pybot Prod
+module "pybot_prod" {
+  source = "./pybot"
+
+  env                 = "prod"
+  vpc_id              = data.aws_vpc.use2.id
+  logs_group          = aws_cloudwatch_log_group.ecslogs.name
+  ecs_cluster_id      = module.ecs.cluster_id
+  task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
+  image_tag           = "master"
+}
+
+resource "aws_lb_listener_rule" "pybot_prod" {
+  listener_arn = aws_lb_listener.default_https.arn
+
+  action {
+    type             = "forward"
+    target_group_arn = module.pybot_prod.lb_tg_arn
+  }
+
+  condition {
+    host_header {
+      values = ["pybot.operationcode.org"]
+    }
+  }
+
+  condition {
+    path_pattern {
+      values = ["/slack/*", "/pybot/*", "/airtable/*"]
+    }
+  }
+}
