@@ -1,21 +1,25 @@
 # load balancer ARN  arn:aws:acm:us-east-2:633607774026:certificate/8de9fd02-191c-485f-b952-e5ba32e90acb
 ################################################################################
+
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
 resource "aws_security_group" "lb_security_group" {
   name_prefix = "ecs"
   vpc_id      = data.aws_vpc.use2.id
 
   # allow incoming traffic
   ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port        = 443
+    to_port          = 443
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
   ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    from_port        = 80
+    to_port          = 80
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
   }
 
   # allow all outgoing traffic
@@ -31,12 +35,14 @@ resource "aws_security_group" "lb_security_group" {
   }
 }
 
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lb
 resource "aws_lb" "ecs" {
   name_prefix     = "oc"
   security_groups = [aws_security_group.lb_security_group.id]
 
   load_balancer_type = "application"
   internal           = false
+  ip_address_type    = "dualstack"
 
   subnets = data.aws_subnets.use2.ids
 
