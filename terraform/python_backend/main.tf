@@ -145,5 +145,5 @@ resource "aws_lb_target_group" "python_backend" {
     unhealthy_threshold = 2
   }
 
-  deregistration_delay = 300
+  deregistration_delay = 10
 }
