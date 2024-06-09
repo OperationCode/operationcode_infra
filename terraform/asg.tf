@@ -1,7 +1,7 @@
 
 # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html#ecs-optimized-ami-linux
 data "aws_ssm_parameter" "ecs_optimized_ami" {
-  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended"
+  name = "/aws/service/ecs/optimized-ami/amazon-linux-2023/recommended"
 }
 
 # https://registry.terraform.io/modules/terraform-aws-modules/autoscaling/aws/latest
@@ -37,7 +37,7 @@ module "autoscaling" {
     {
       delete_on_termination       = true
       device_index                = 0
-      associate_public_ip_address = true
+      associate_public_ip_address = false
       security_groups             = [module.autoscaling_sg.security_group_id]
     }
   ]

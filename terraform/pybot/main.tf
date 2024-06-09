@@ -108,5 +108,5 @@ resource "aws_lb_target_group" "pybot" {
     unhealthy_threshold = 2
   }
 
-  deregistration_delay = 300
+  deregistration_delay = 10
 }
