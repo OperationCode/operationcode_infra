@@ -93,7 +93,7 @@ resource "aws_lb_listener_rule" "shutdown_sites_redirector" {
         "resources.operationcode.org",
         "resources-staging.operationcode.org",
         "api.operationcode.org",
-        "backend-staging.operationcode.org",
+        "backend.operationcode.org",
         "api.staging.operationcode.org",
       ]
     }

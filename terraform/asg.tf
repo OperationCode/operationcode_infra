@@ -10,12 +10,39 @@ module "autoscaling" {
   version = "~> 6.5"
 
   name             = "${local.name}-spot"
-  instance_type    = "t3.small"
   min_size         = 1
-  max_size         = 2
-  desired_capacity = 1
-  instance_market_options = {
-    market_type = "spot"
+  max_size         = 4
+  desired_capacity = 2
+
+  # Enable mixed instances policy
+  use_mixed_instances_policy = true
+
+  # Mixed Instances Policy for better availability
+  mixed_instances_policy = {
+    instances_distribution = {
+      on_demand_base_capacity                  = 0
+      on_demand_percentage_above_base_capacity = 0
+      spot_allocation_strategy                 = "capacity-optimized"
+    }
+
+    override = [
+      {
+        instance_type     = "t3.small"
+        weighted_capacity = "2"
+      },
+      {
+        instance_type     = "t3a.small"
+        weighted_capacity = "2"
+      },
+      {
+        instance_type     = "t3.micro"
+        weighted_capacity = "1"
+      },
+      {
+        instance_type     = "t3a.micro"
+        weighted_capacity = "1"
+      }
+    ]
   }
 
   image_id                        = jsondecode(data.aws_ssm_parameter.ecs_optimized_ami.value)["image_id"]
