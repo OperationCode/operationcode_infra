@@ -37,7 +37,7 @@ module "autoscaling" {
     {
       delete_on_termination       = true
       device_index                = 0
-      associate_public_ip_address = false
+      associate_public_ip_address = true
       security_groups             = [module.autoscaling_sg.security_group_id]
     }
   ]

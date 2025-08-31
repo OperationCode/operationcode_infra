@@ -52,6 +52,14 @@ resource "aws_ecs_task_definition" "pybot" {
         }
       }
 
+      # healthCheck = {
+      #   command     = ["CMD-SHELL", "wget -q http://localhost:5000/health || exit 1"]
+      #   interval    = 30
+      #   timeout     = 5
+      #   retries     = 3
+      #   startPeriod = 60
+      # }
+
       secrets = local.secrets_env
 
       mountPoints = []

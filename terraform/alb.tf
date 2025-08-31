@@ -39,6 +39,11 @@ resource "aws_security_group" "lb_security_group" {
 resource "aws_lb" "ecs" {
   name_prefix     = "oc"
   security_groups = [aws_security_group.lb_security_group.id]
+  access_logs {
+    bucket  = "oc-alb-logs"
+    enabled = true
+    prefix  = "2025"
+  }
 
   load_balancer_type = "application"
   internal           = false
