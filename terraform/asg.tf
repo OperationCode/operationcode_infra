@@ -1,7 +1,8 @@
 
 # https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html#ecs-optimized-ami-linux
 data "aws_ssm_parameter" "ecs_optimized_ami" {
-  name = "/aws/service/ecs/optimized-ami/amazon-linux-2023/recommended"
+  # name = "/aws/service/ecs/optimized-ami/amazon-linux-2023/recommended"
+  name = "/aws/service/ecs/optimized-ami/amazon-linux-2023/arm64/recommended"
 }
 
 # https://registry.terraform.io/modules/terraform-aws-modules/autoscaling/aws/latest
@@ -10,7 +11,7 @@ module "autoscaling" {
   version = "~> 6.5"
 
   name             = "${local.name}-spot"
-  min_size         = 1
+  min_size         = 2
   max_size         = 4
   desired_capacity = 2
 
@@ -27,22 +28,34 @@ module "autoscaling" {
 
     override = [
       {
-        instance_type     = "t3.small"
-        weighted_capacity = "2"
-      },
-      {
-        instance_type     = "t3a.small"
-        weighted_capacity = "2"
-      },
-      {
-        instance_type     = "t3.micro"
+        instance_type     = "t4g.small"
         weighted_capacity = "1"
       },
       {
-        instance_type     = "t3a.micro"
+        instance_type     = "t4g.micro"
         weighted_capacity = "1"
       }
     ]
+
+    #amd64 options
+    # override = [
+    #   {
+    #     instance_type     = "t3.small"
+    #     weighted_capacity = "2"
+    #   },
+    #   {
+    #     instance_type     = "t3a.small"
+    #     weighted_capacity = "2"
+    #   },
+    #   {
+    #     instance_type     = "t3.micro"
+    #     weighted_capacity = "1"
+    #   },
+    #   {
+    #     instance_type     = "t3a.micro"
+    #     weighted_capacity = "1"
+    #   }
+    # ]
   }
 
   image_id                        = jsondecode(data.aws_ssm_parameter.ecs_optimized_ami.value)["image_id"]

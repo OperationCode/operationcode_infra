@@ -200,7 +200,7 @@ module "pybot_prod" {
   logs_group          = aws_cloudwatch_log_group.ecslogs.name
   ecs_cluster_id      = module.ecs.cluster_id
   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
-  image_tag           = "master"
+  image_tag           = "latest"
 }
 
 resource "aws_lb_listener_rule" "pybot_prod" {
