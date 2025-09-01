@@ -27,7 +27,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_attach" {
 #   logs_group          = aws_cloudwatch_log_group.ecslogs.name
 #   ecs_cluster_id      = module.ecs.cluster_id
 #   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
-#   image_tag           = "master"
+#   image_tag           = "latest"
 # }
 
 # resource "aws_lb_listener_rule" "python_backend_prod" {
@@ -54,7 +54,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_attach" {
 #   logs_group          = aws_cloudwatch_log_group.ecslogs.name
 #   ecs_cluster_id      = module.ecs.cluster_id
 #   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
-#   image_tag           = "staging"
+#   image_tag           = "latest"
 # }
 
 # resource "aws_lb_listener_rule" "python_backend_staging" {

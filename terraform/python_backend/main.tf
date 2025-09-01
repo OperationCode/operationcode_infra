@@ -33,7 +33,7 @@ resource "aws_ecs_task_definition" "python_backend" {
   container_definitions = jsonencode([
     {
       name      = "python_backend_${var.env}"
-      image     = "operationcode/back-end:${var.image_tag}"
+      image     = "633607774026.dkr.ecr.us-east-2.amazonaws.com/back-end:${var.image_tag}"
       essential = true
 
       portMappings = [
