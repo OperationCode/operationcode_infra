@@ -53,13 +53,13 @@ resource "aws_ecs_task_definition" "python_backend" {
         }
       }
 
-      # healthCheck = {
-      #   command     = ["CMD-SHELL", "wget -q http://localhost:8000/healthz || exit 1"]
-      #   interval    = 30
-      #   timeout     = 5
-      #   retries     = 3
-      #   startPeriod = 60
-      # }
+      healthCheck = {
+        command     = ["CMD-SHELL", "wget -q -O /dev/null http://localhost:8000/healthz"]
+        interval    = 30
+        timeout     = 5
+        retries     = 3
+        startPeriod = 60
+      }
 
       environment = [
         {

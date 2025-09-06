@@ -107,6 +107,21 @@ module "autoscaling" {
   # reduce cloudwatch costs
   enable_monitoring = false
 
+  # Enable essential autoscaling metrics
+  enabled_metrics = [
+    "GroupDesiredCapacity",
+    "GroupInServiceCapacity",
+    "GroupInServiceInstances",
+    "GroupMaxSize",
+    "GroupMinSize",
+    "GroupPendingCapacity",
+    "GroupPendingInstances",
+    "GroupTerminatingCapacity",
+    "GroupTerminatingInstances",
+    "GroupTotalCapacity",
+    "GroupTotalInstances"
+  ]
+
   tags = local.tags
 }
 

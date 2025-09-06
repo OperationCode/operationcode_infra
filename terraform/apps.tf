@@ -19,31 +19,31 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_attach" {
 ################################################################################
 
 # Backend Prod
-# module "python_backend_prod" {
-#   source = "./python_backend"
+module "python_backend_prod" {
+  source = "./python_backend"
 
-#   env                 = "prod"
-#   vpc_id              = data.aws_vpc.use2.id
-#   logs_group          = aws_cloudwatch_log_group.ecslogs.name
-#   ecs_cluster_id      = module.ecs.cluster_id
-#   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
-#   image_tag           = "latest"
-# }
+  env                 = "prod"
+  vpc_id              = data.aws_vpc.use2.id
+  logs_group          = aws_cloudwatch_log_group.ecslogs.name
+  ecs_cluster_id      = module.ecs.cluster_id
+  task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
+  image_tag           = "latest"
+}
 
-# resource "aws_lb_listener_rule" "python_backend_prod" {
-#   listener_arn = aws_lb_listener.default_https.arn
+resource "aws_lb_listener_rule" "python_backend_prod" {
+  listener_arn = aws_lb_listener.default_https.arn
 
-#   action {
-#     type             = "forward"
-#     target_group_arn = module.python_backend_prod.lb_tg_arn
-#   }
+  action {
+    type             = "forward"
+    target_group_arn = module.python_backend_prod.lb_tg_arn
+  }
 
-#   condition {
-#     host_header {
-#       values = ["backend.operationcode.org", "api.operationcode.org"]
-#     }
-#   }
-# }
+  condition {
+    host_header {
+      values = ["backend.operationcode.org", "api.operationcode.org"]
+    }
+  }
+}
 
 # Backend Staging
 # module "python_backend_staging" {
@@ -92,8 +92,6 @@ resource "aws_lb_listener_rule" "shutdown_sites_redirector" {
       values = [
         "resources.operationcode.org",
         "resources-staging.operationcode.org",
-        "api.operationcode.org",
-        "backend.operationcode.org",
         "api.staging.operationcode.org",
       ]
     }

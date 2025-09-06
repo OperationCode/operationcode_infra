@@ -11,7 +11,7 @@ locals {
 
   # CHANGEME once infra scales up
   cpu    = var.env == "prod" ? 256 : 256
-  memory = var.env == "prod" ? 512 : 256
+  memory = var.env == "prod" ? 256 : 128
   count  = var.env == "prod" ? 1 : 1
 
 
@@ -52,13 +52,13 @@ resource "aws_ecs_task_definition" "pybot" {
         }
       }
 
-      # healthCheck = {
-      #   command     = ["CMD-SHELL", "wget -q http://localhost:5000/health || exit 1"]
-      #   interval    = 30
-      #   timeout     = 5
-      #   retries     = 3
-      #   startPeriod = 60
-      # }
+      healthCheck = {
+        command     = ["CMD-SHELL", "wget -q -O /dev/null http://localhost:5000/health"]
+        interval    = 30
+        timeout     = 5
+        retries     = 3
+        startPeriod = 60
+      }
 
       secrets = local.secrets_env
 
