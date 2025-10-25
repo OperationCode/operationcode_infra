@@ -94,6 +94,14 @@ resource "aws_ecs_task_definition" "python_backend" {
           "name" : "DB_ENGINE",
           "value" : "django.db.backends.postgresql"
         },
+        {
+          "name" : "TZ",
+          "value" : "UTC"
+        },
+        {
+          "name" : "PGTZ",
+          "value" : "UTC"
+        },
       ]
 
       secrets = local.secrets_env
