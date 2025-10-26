@@ -2,6 +2,8 @@ name: Terraform validation
 
 on:
   push:
+    branches:
+      - main
   pull_request:
 
 jobs:
