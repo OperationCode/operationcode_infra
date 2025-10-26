@@ -8,7 +8,7 @@ data "aws_ssm_parameter" "ecs_optimized_ami" {
 # https://registry.terraform.io/modules/terraform-aws-modules/autoscaling/aws/latest
 module "autoscaling" {
   source  = "terraform-aws-modules/autoscaling/aws"
-  version = "~> 8.0"  # v9+ has breaking API changes in mixed_instances_policy
+  version = "~> 8.0" # v9+ has breaking API changes in mixed_instances_policy
 
   name             = "${local.name}-spot"
   min_size         = 2
@@ -77,8 +77,8 @@ module "autoscaling" {
     {
       delete_on_termination       = true
       device_index                = 0
-      associate_public_ip_address = true  # set to False to use IPv6 only - still doesn't fully work with SSM and ECS as of Oct 2025
-      ipv6_address_count          = 1      # Assign one IPv6 address
+      associate_public_ip_address = true # set to False to use IPv6 only - still doesn't fully work with SSM and ECS as of Oct 2025
+      ipv6_address_count          = 1    # Assign one IPv6 address
       security_groups             = [module.autoscaling_sg.security_group_id]
     }
   ]
@@ -129,7 +129,7 @@ module "autoscaling" {
 # https://registry.terraform.io/modules/terraform-aws-modules/security-group/aws/latest
 module "autoscaling_sg" {
   source  = "terraform-aws-modules/security-group/aws"
-  version = "~> 5.3"  # Latest version
+  version = "~> 5.3" # Latest version
 
   name        = local.name
   description = "Autoscaling group security group"
@@ -153,7 +153,7 @@ module "autoscaling_sg" {
     }
   ]
 
-  egress_rules = ["all-all"]  # Already includes IPv4 and IPv6 egress
+  egress_rules = ["all-all"] # Already includes IPv4 and IPv6 egress
 
   tags = local.tags
 }
