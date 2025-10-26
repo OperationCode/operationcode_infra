@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  terraform-fmt:
-    name: Terraform Format
+  terraform:
+    name: Terraform format and validate
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -22,20 +22,6 @@ jobs:
 
       - name: Terraform Format
         run: terraform fmt -check -recursive
-
-  terraform-validate:
-    name: Terraform Validate
-    runs-on: ubuntu-latest
-    needs: terraform-fmt
-    defaults:
-      run:
-        working-directory: terraform
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
 
       - name: Terraform Init
         run: terraform init -backend=false
