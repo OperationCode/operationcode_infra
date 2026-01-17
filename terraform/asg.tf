@@ -139,7 +139,7 @@ module "autoscaling_sg" {
   ingress_with_cidr_blocks = [
     {
       rule        = "ssh-tcp"
-      cidr_blocks = "73.37.119.155/32"
+      cidr_blocks = "71.237.173.68/32"
     }
   ]
 
