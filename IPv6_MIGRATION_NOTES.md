@@ -27,12 +27,13 @@
 
 ### Why It Failed
 
-**Root cause:** AWS provides DNS64 but **NOT NAT64**
+**Root cause:** NAT64 requires NAT Gateway, which negates cost savings
 
 **What this means:**
 - **DNS64** (✅ provided): Translates DNS queries from A records to AAAA records using `64:ff9b::/96` prefix
-- **NAT64** (❌ NOT provided): Would translate actual IPv6 packets to IPv4 for IPv4-only services
-- Result: Instances can resolve IPv4-only services to IPv6 addresses, but packets time out with no NAT64 gateway
+- **NAT64** (✅ available via NAT Gateway): AWS NAT Gateway supports NAT64 translation when routing `64:ff9b::/96` traffic through it
+- **The problem**: NAT Gateway costs ~$32+/month base, which exceeds the ~$18/month we'd save on public IPv4 addresses
+- Additionally, SSM still requires IPv4 connectivity regardless of NAT64
 
 **Services that broke:**
 - ❌ AWS SSM Agent (IPv4-only): `dial tcp [64:ff9b::392:b12]:443: i/o timeout`
@@ -93,15 +94,14 @@ network_interfaces = [
 
 **Waiting for AWS to provide:**
 
-1. **Native NAT64 Service**
-   - Similar to NAT Gateway but for IPv6→IPv4 translation
-   - Would allow IPv6-only instances to reach IPv4-only services
-   - **This is the blocker - AWS doesn't offer this**
+1. **SSM dual-stack endpoints** (main blocker)
+   - SSM, EC2 Messages, and SSM Messages currently require IPv4
+   - Without this, managed EC2 instances cannot go IPv6-only
+   - NAT64 via NAT Gateway exists but costs ~$32+/month (negates savings)
 
-2. **Alternative: All services support dual-stack**
-   - Every AWS service with IPv6 endpoints
+2. **Alternative: All management services support dual-stack**
    - Particularly: SSM, EC2 Messages, SSM Messages
-   - Currently only ECS, ECR, CloudWatch Logs, S3 support dual-stack
+   - Currently ECS, ECR, CloudWatch Logs, S3, IAM support dual-stack
 
 **Self-managed workarounds we rejected:**
 
@@ -162,13 +162,14 @@ This indicates DNS64 translation without NAT64 gateway.
 
 **Only attempt IPv6-only again when ONE of these is true:**
 
-1. ✅ **AWS launches managed NAT64 service**
-   - Monitor AWS announcements for VPC NAT64 Gateway
-   - Similar to existing NAT Gateway but for IPv6→IPv4
-
-2. ✅ **All required AWS services support dual-stack**
+1. ✅ **SSM gets dual-stack endpoints**
    - Specifically need: SSM, EC2 Messages, SSM Messages with IPv6
-   - Check: https://docs.aws.amazon.com/general/latest/gr/aws-ipv6-support.html
+   - This is the primary blocker for managed EC2 instances
+   - Check: https://docs.aws.amazon.com/vpc/latest/userguide/aws-ipv6-support.html
+
+2. ✅ **NAT Gateway pricing drops significantly**
+   - Currently ~$32+/month base cost negates IPv4 savings
+   - Would need to be <$10/month to make economic sense
 
 3. ✅ **Public IPv4 costs exceed $20-30/month**
    - At current scale (2-4 instances), savings too small
@@ -183,6 +184,17 @@ This indicates DNS64 translation without NAT64 gateway.
 dig service-name.region.api.aws AAAA +short
 # If returns IPv6 address, service supports dual-stack
 ```
+
+**Track AWS IPv6 progress:**
+- Official tracker: https://docs.aws.amazon.com/vpc/latest/userguide/aws-ipv6-support.html
+- AWS What's New (filter for IPv6): https://aws.amazon.com/new/
+
+**Key services to watch for IPv6-only viability:**
+- SSM (Systems Manager) - currently IPv4-only, this is the main blocker
+- EC2 Messages - currently IPv4-only
+- SSM Messages - currently IPv4-only
+
+**Last checked:** January 2026 - SSM still requires IPv4 connectivity
 
 ## Rollback Summary
 

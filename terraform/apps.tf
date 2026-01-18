@@ -27,7 +27,7 @@ module "python_backend_prod" {
   logs_group          = aws_cloudwatch_log_group.ecslogs.name
   ecs_cluster_id      = module.ecs.cluster_id
   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
-  image_tag           = "latest"
+  image_tag           = "prod"
 }
 
 resource "aws_lb_listener_rule" "python_backend_prod" {
@@ -46,31 +46,31 @@ resource "aws_lb_listener_rule" "python_backend_prod" {
 }
 
 # Backend Staging
-# module "python_backend_staging" {
-#   source = "./python_backend"
+module "python_backend_staging" {
+  source = "./python_backend"
 
-#   env                 = "staging"
-#   vpc_id              = data.aws_vpc.use2.id
-#   logs_group          = aws_cloudwatch_log_group.ecslogs.name
-#   ecs_cluster_id      = module.ecs.cluster_id
-#   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
-#   image_tag           = "latest"
-# }
+  env                 = "staging"
+  vpc_id              = data.aws_vpc.use2.id
+  logs_group          = aws_cloudwatch_log_group.ecslogs.name
+  ecs_cluster_id      = module.ecs.cluster_id
+  task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
+  image_tag           = "staging"
+}
 
-# resource "aws_lb_listener_rule" "python_backend_staging" {
-#   listener_arn = aws_lb_listener.default_https.arn
+resource "aws_lb_listener_rule" "python_backend_staging" {
+  listener_arn = aws_lb_listener.default_https.arn
 
-#   action {
-#     type             = "forward"
-#     target_group_arn = module.python_backend_staging.lb_tg_arn
-#   }
+  action {
+    type             = "forward"
+    target_group_arn = module.python_backend_staging.lb_tg_arn
+  }
 
-#   condition {
-#     host_header {
-#       values = ["backend-staging.operationcode.org", "api.staging.operationcode.org"]
-#     }
-#   }
-# }
+  condition {
+    host_header {
+      values = ["backend-staging.operationcode.org", "api.staging.operationcode.org"]
+    }
+  }
+}
 
 # Redirector for shut down sites
 resource "aws_lb_listener_rule" "shutdown_sites_redirector" {
@@ -92,7 +92,6 @@ resource "aws_lb_listener_rule" "shutdown_sites_redirector" {
       values = [
         "resources.operationcode.org",
         "resources-staging.operationcode.org",
-        "api.staging.operationcode.org",
       ]
     }
   }
