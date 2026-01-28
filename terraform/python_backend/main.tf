@@ -54,7 +54,7 @@ resource "aws_ecs_task_definition" "python_backend" {
       }
 
       healthCheck = {
-        command     = ["CMD-SHELL", "wget -q -O /dev/null http://localhost:8000/healthz"]
+        command     = ["CMD-SHELL", "curl -f -s -o /dev/null http://localhost:8000/healthz"]
         interval    = 30
         timeout     = 5
         retries     = 3
