@@ -33,7 +33,7 @@ resource "aws_ecs_task_definition" "python_backend" {
   container_definitions = jsonencode([
     {
       name      = "python_backend_${var.env}"
-      image     = "operationcode/back-end:${var.image_tag}"
+      image     = "633607774026.dkr.ecr.us-east-2.amazonaws.com/back-end:${var.image_tag}"
       essential = true
 
       portMappings = [
@@ -53,6 +53,13 @@ resource "aws_ecs_task_definition" "python_backend" {
         }
       }
 
+      healthCheck = {
+        command     = ["CMD-SHELL", "curl -f -s -o /dev/null http://localhost:8000/healthz"]
+        interval    = 30
+        timeout     = 5
+        retries     = 3
+        startPeriod = 60
+      }
 
       environment = [
         {
@@ -86,6 +93,14 @@ resource "aws_ecs_task_definition" "python_backend" {
         {
           "name" : "DB_ENGINE",
           "value" : "django.db.backends.postgresql"
+        },
+        {
+          "name" : "TZ",
+          "value" : "UTC"
+        },
+        {
+          "name" : "PGTZ",
+          "value" : "UTC"
         },
       ]
 
