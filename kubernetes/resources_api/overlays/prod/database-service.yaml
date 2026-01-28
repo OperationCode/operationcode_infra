@@ -1,7 +1,0 @@
-kind: Service
-apiVersion: v1
-metadata:
-  name: resources-postgres
-spec:
-  type: ExternalName
-  externalName: python-prod.czwauqf3tjaz.us-east-2.rds.amazonaws.com
