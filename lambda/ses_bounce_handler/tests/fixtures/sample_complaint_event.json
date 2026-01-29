@@ -1,0 +1,10 @@
+{
+  "Records": [
+    {
+      "EventSource": "aws:sns",
+      "Sns": {
+        "Message": "{\"notificationType\":\"Complaint\",\"complaint\":{\"complainedRecipients\":[{\"emailAddress\":\"test@example.com\"}],\"timestamp\":\"2026-01-28T12:00:00.000Z\",\"feedbackId\":\"0000014c5b30d4d0-1234abcd-1234-1234-1234-123456789012-000000\",\"complaintFeedbackType\":\"abuse\"},\"mail\":{\"timestamp\":\"2026-01-28T12:00:00.000Z\",\"source\":\"noreply@coders.operationcode.org\",\"messageId\":\"0000014c5b30d4d0-abcd1234-1234-1234-1234-123456789012-000000\",\"destination\":[\"test@example.com\"]}}"
+      }
+    }
+  ]
+}

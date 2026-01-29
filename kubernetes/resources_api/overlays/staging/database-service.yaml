@@ -1,7 +1,0 @@
-kind: Service
-apiVersion: v1
-metadata:
-  name: resources-postgres
-spec:
-  type: ExternalName
-  externalName: staging-postgres.pgo.svc.cluster.local

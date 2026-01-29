@@ -1,30 +1,34 @@
-# Operation Code Infra
-Platform infrastructure for the [Operation Code site](https://operationcode.org/).
+# Operation Code Infrastructure
 
-[![CircleCI](https://circleci.com/gh/OperationCode/operationcode_infra/tree/master.svg?style=svg)](https://circleci.com/gh/OperationCode/operationcode_infra/tree/master)
+Terraform-managed AWS infrastructure for [Operation Code](https://operationcode.org/).
 
-## warning
+## Overview
 
-This repository is using [ArgoCD](https://argoproj.github.io/argo-cd/) to deploy the Operation Code infrastructure. Changes landed on main in this repository are reflected in the real running infrastructure.
+ECS cluster running containerized services on EC2 spot instances, fronted by an Application Load Balancer.
 
-To set up your workstation to access our Kubernetes cluster, please check the below instructions
+### Active Services
+- **Python Backend** (prod/staging) - `backend.operationcode.org`, `api.operationcode.org`
+- **Pybot** (prod) - Slack integration bot at `pybot.operationcode.org`
 
-## Setup
+### Stack
+- **Region:** us-east-2
+- **Compute:** ECS with Fargate + spot instances
+- **Routing:** ALB with host-based routing
+- **Logs:** CloudWatch (7-day retention)
+- **State:** S3 backend
 
-### Operation Code's Kubernetes Cluster.
-Greetings! Much of Operation Code's web site runs in a [Kubernetes](https://kubernetes.io/) cluster.  These instructions will guide you through setting up access to our cluster so you can run rails console, tail logs, and more!   
+## Structure
+```
+terraform/
+├── ecs.tf           # ECS cluster config
+├── apps.tf          # Service definitions
+├── alb.tf           # Load balancer
+├── asg.tf           # Auto-scaling groups
+├── python_backend/  # Backend service module
+└── pybot/           # Pybot service module
+```
 
-### Getting access to the cluster
-1. Ensure you have [AWS](https://aws.amazon.com) access, and the [aws CLI](https://aws.amazon.com/cli/) is operating correctly
-2. Install eksctl: https://eksctl.io/introduction/#installation
-3. Run: `eksctl utils write-kubeconfig --region us-east-2 --cluster operationcode-backend`
-4. Ensure `kubectl` is working by running `kubectl version`, refer to [Kubectl Install Docs](https://kubernetes.io/docs/tasks/tools/#kubectl) 
+## License
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-    Note: if there are issues refer to this [SO Post](https://stackoverflow.com/questions/55360666/kubernetes-kubectl-run-command-not-found)
-
-5. Verify everything works: `kubectl get namespaces`
-
-
-## Licensing
- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)   
 Operation Code Infra is under the [MIT License](/LICENSE).

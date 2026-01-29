@@ -1,0 +1,17 @@
+# Python dependencies installed for Lambda packaging
+python/
+
+# Virtual environments
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Pytest
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
