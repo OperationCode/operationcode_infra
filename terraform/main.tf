@@ -16,3 +16,11 @@ terraform {
     region = "us-east-2"
   }
 }
+
+# us-east-1 provider for SES + Lambda
+# All SES-related resources (S3, Lambda, SES, CloudWatch) will use this
+# Note: Default provider is defined in ecs.tf
+provider "aws" {
+  alias  = "us_east_1"
+  region = "us-east-1"
+}

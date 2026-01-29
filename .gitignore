@@ -1,2 +1,30 @@
+# Terraform
 .terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+ENV/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Build artifacts
+*.zip
+
+# Local environment
+.envrc
+
+# OS
 .DS_Store

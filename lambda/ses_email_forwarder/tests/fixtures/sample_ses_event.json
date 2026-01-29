@@ -1,0 +1,74 @@
+{
+  "Records": [
+    {
+      "eventSource": "aws:ses",
+      "eventVersion": "1.0",
+      "ses": {
+        "mail": {
+          "timestamp": "2026-01-28T12:00:00.000Z",
+          "source": "sender@example.com",
+          "messageId": "abc123def456",
+          "destination": [
+            "testuser@coders.operationcode.org"
+          ],
+          "headersTruncated": false,
+          "headers": [
+            {
+              "name": "From",
+              "value": "sender@example.com"
+            },
+            {
+              "name": "To",
+              "value": "testuser@coders.operationcode.org"
+            },
+            {
+              "name": "Subject",
+              "value": "Test Email"
+            },
+            {
+              "name": "MIME-Version",
+              "value": "1.0"
+            },
+            {
+              "name": "Content-Type",
+              "value": "text/plain; charset=UTF-8"
+            }
+          ],
+          "commonHeaders": {
+            "from": [
+              "sender@example.com"
+            ],
+            "to": [
+              "testuser@coders.operationcode.org"
+            ],
+            "subject": "Test Email"
+          }
+        },
+        "receipt": {
+          "timestamp": "2026-01-28T12:00:00.000Z",
+          "processingTimeMillis": 100,
+          "recipients": [
+            "testuser@coders.operationcode.org"
+          ],
+          "spamVerdict": {
+            "status": "PASS"
+          },
+          "virusVerdict": {
+            "status": "PASS"
+          },
+          "spfVerdict": {
+            "status": "PASS"
+          },
+          "dkimVerdict": {
+            "status": "PASS"
+          },
+          "action": {
+            "type": "Lambda",
+            "functionArn": "arn:aws:lambda:us-east-1:123456789012:function:ses-email-forwarder",
+            "invocationType": "Event"
+          }
+        }
+      }
+    }
+  ]
+}
