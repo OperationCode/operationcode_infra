@@ -30,3 +30,16 @@ output "ses_dkim_tokens" {
   description = "DKIM tokens for DNS configuration"
   value       = module.ses_email_forwarder.ses_dkim_tokens
 }
+
+output "ses_mail_from_domain" {
+  description = "Custom MAIL FROM domain for DMARC alignment"
+  value       = module.ses_email_forwarder.mail_from_domain
+}
+
+output "ses_mail_from_dns_records" {
+  description = "DNS records required for custom MAIL FROM domain"
+  value = {
+    mx_record  = "MX: ${module.ses_email_forwarder.mail_from_domain} -> ${module.ses_email_forwarder.mail_from_mx_record}"
+    spf_record = "TXT: ${module.ses_email_forwarder.mail_from_domain} -> ${module.ses_email_forwarder.mail_from_spf_record}"
+  }
+}
