@@ -204,6 +204,17 @@ resource "aws_ses_domain_dkim" "coders" {
   domain = aws_ses_domain_identity.coders.domain
 }
 
+# Custom MAIL FROM domain for DMARC alignment
+# This configures SES to use bounce.coders.operationcode.org as the envelope sender
+resource "aws_ses_domain_mail_from" "coders" {
+  domain           = aws_ses_domain_identity.coders.domain
+  mail_from_domain = "bounce.${aws_ses_domain_identity.coders.domain}"
+
+  # BehaviorOnMXFailure: UseDefaultValue = use amazonses.com if DNS fails
+  # RejectMessage = reject emails if DNS fails (more strict)
+  behavior_on_mx_failure = "UseDefaultValue"
+}
+
 # SES Receipt Rule Set
 resource "aws_ses_receipt_rule_set" "main" {
   rule_set_name = "coders-email-forwarding"

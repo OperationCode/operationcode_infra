@@ -48,3 +48,18 @@ output "ses_configuration_set_name" {
   description = "Name of the SES configuration set"
   value       = aws_ses_configuration_set.main.name
 }
+
+output "mail_from_domain" {
+  description = "Custom MAIL FROM domain for DMARC alignment"
+  value       = aws_ses_domain_mail_from.coders.mail_from_domain
+}
+
+output "mail_from_mx_record" {
+  description = "MX record value for the custom MAIL FROM domain (add this to DNS)"
+  value       = "10 feedback-smtp.us-east-1.amazonses.com"
+}
+
+output "mail_from_spf_record" {
+  description = "SPF TXT record value for the custom MAIL FROM domain (add this to DNS)"
+  value       = "v=spf1 include:amazonses.com ~all"
+}
