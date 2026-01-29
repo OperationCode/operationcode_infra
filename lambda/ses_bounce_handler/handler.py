@@ -294,7 +294,9 @@ def lambda_handler(event, context):
             sns_message = record['Sns']['Message']
             message = json.loads(sns_message)
 
-            notification_type = message.get('notificationType')
+            # SES Configuration Set Event Destinations use 'eventType'
+            # Direct SES notifications use 'notificationType'
+            notification_type = message.get('eventType') or message.get('notificationType')
 
             print(f"Processing {notification_type} notification")
 
