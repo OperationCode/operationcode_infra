@@ -273,7 +273,8 @@ def forward_email(raw_email: bytes, forward_to: str, original_recipient: str) ->
         response = ses_client.send_raw_email(
             Source=config['forward_from_email'],
             Destinations=[forward_to],
-            RawMessage={'Data': new_msg.as_bytes()}
+            RawMessage={'Data': new_msg.as_bytes()},
+            ConfigurationSetName='coders-email-forwarding-config'
         )
         return response
     except Exception as e:

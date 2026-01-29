@@ -27,3 +27,24 @@ output "ses_domain_identity" {
   description = "The domain identity verified in SES"
   value       = aws_ses_domain_identity.coders.domain
 }
+
+# Bounce handling outputs
+output "bounce_handler_lambda_arn" {
+  description = "ARN of the bounce handler Lambda function"
+  value       = aws_lambda_function.bounce_handler.arn
+}
+
+output "sns_bounce_topic_arn" {
+  description = "ARN of the SNS topic for bounce notifications"
+  value       = aws_sns_topic.ses_bounces.arn
+}
+
+output "sns_complaint_topic_arn" {
+  description = "ARN of the SNS topic for complaint notifications"
+  value       = aws_sns_topic.ses_complaints.arn
+}
+
+output "ses_configuration_set_name" {
+  description = "Name of the SES configuration set"
+  value       = aws_ses_configuration_set.main.name
+}

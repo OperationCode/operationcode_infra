@@ -3,6 +3,8 @@
 *.tfstate
 *.tfstate.*
 *.tfvars
+tfplan
+*.tfplan
 
 # Python
 *.pyc
@@ -19,6 +21,9 @@ env/
 *.egg-info/
 .pytest_cache/
 .mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
 
 # Build artifacts
 *.zip
