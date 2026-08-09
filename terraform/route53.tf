@@ -18,7 +18,10 @@ resource "aws_route53_record" "coders_spf" {
   name    = "coders.operationcode.org"
   type    = "TXT"
   ttl     = 300
-  records = ["v=spf1 include:amazonses.com ~all"]
+  records = [
+    "v=spf1 include:amazonses.com ~all",
+    "anthropic-domain-verification-59rpeq=AndztPpfh6dzVbbixaTcxhWXS",
+  ]
 }
 
 # DKIM records (3 tokens from SES)

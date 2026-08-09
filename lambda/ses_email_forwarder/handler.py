@@ -111,13 +111,14 @@ def init_sentry():
 def lookup_alias_in_airtable(alias: str) -> dict | None:
     """
     Query Airtable to find the mapping for a given alias.
-    Returns the record if found and active, None otherwise.
+    Returns the record if found and status is active or past_due, None otherwise.
+    past_due is included so forwarding continues during a payment grace period.
 
     Args:
         alias: The email alias (local part before @)
 
     Returns:
-        dict or None: The Airtable record fields if found and active
+        dict or None: The Airtable record fields if found and active or past_due
     """
     credentials = get_airtable_credentials()
     airtable_api_key = credentials['airtable_api_key']
@@ -126,10 +127,10 @@ def lookup_alias_in_airtable(alias: str) -> dict | None:
 
     url = f"https://api.airtable.com/v0/{airtable_base_id}/{urllib.parse.quote(airtable_table_name)}"
 
-    # Filter for exact alias match and active status
+    # Filter for exact alias match and status of active or past_due
     # Note: Airtable field names are case-sensitive
     params = urllib.parse.urlencode({
-        'filterByFormula': f"AND({{Alias}} = '{alias}', {{Status}} = 'active')",
+        'filterByFormula': f"AND({{Alias}} = '{alias}', OR({{Status}} = 'active', {{Status}} = 'past_due'))",
         'maxRecords': 1
     })
 
@@ -148,9 +149,9 @@ def lookup_alias_in_airtable(alias: str) -> dict | None:
             data = json.loads(response.read().decode())
             records = data.get('records', [])
             if records:
-                print(f"Found active alias mapping for: {alias}")
+                print(f"Found forwardable alias mapping for: {alias}")
                 return records[0]['fields']
-            print(f"No active alias mapping found for: {alias}")
+            print(f"No forwardable alias mapping found for: {alias}")
             return None
     except urllib.error.HTTPError as e:
         error_body = e.read().decode()
@@ -343,7 +344,7 @@ def lambda_handler(event, context):
             mapping = lookup_alias_in_airtable(alias)
 
             if not mapping:
-                print(f"No active mapping found for alias: {alias}")
+                print(f"No forwardable mapping found for alias: {alias}")
                 # Silently drop emails to unknown aliases
                 continue
 
