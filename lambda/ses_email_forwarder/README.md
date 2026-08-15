@@ -7,7 +7,7 @@ This Lambda function forwards emails received by AWS SES to personal email addre
 When a donor with recurring donations receives a custom email alias (e.g., `john@coders.operationcode.org`), this Lambda function:
 1. Receives the email via SES
 2. Checks Airtable for the alias mapping
-3. Validates the donor's status is "active"
+3. Validates the donor's status is "active" or "past_due"
 4. Forwards the email to the donor's personal email address
 
 ## Environment Variables
@@ -61,7 +61,7 @@ pytest tests/ -v
 4. Lambda:
    - Retrieves email from S3
    - Queries Airtable for alias mapping
-   - Validates donor status is "active"
+   - Validates donor status is "active" or "past_due"
    - Rewrites headers (From, Reply-To)
    - Sends email via SES to personal email
 5. Original sender receives replies via Reply-To header

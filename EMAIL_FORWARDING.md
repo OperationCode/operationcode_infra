@@ -75,7 +75,7 @@ External Sender
    - Action 2: Invoke Lambda function for email forwarding
 4. **Lambda** processes the email:
    - Extracts alias (`john482`) from recipient address
-   - Queries Airtable for mapping (must have `status = "active"`)
+   - Queries Airtable for mapping (must have `status = "active"` or `"past_due"`)
    - Fetches raw email from S3
    - Parses and reconstructs email with new headers:
      - `From:` changes to `noreply@coders.operationcode.org`
@@ -123,11 +123,11 @@ Critical fields used by the system:
 - `Alias`: Email alias (e.g., `john482`)
 - `Email`: Destination email address
 - `Name`: Donor name (used in logging)
-- `Status`: Must be `"active"` for forwarding to work
+- `Status`: Must be `"active"` or `"past_due"` for forwarding to work
 
 **Status Values**:
 - `active`: Forwarding enabled
-- `lapsed`: Payment issue (still forwards, but marked)
+- `past_due`: Payment issue, grace period (forwarding still enabled)
 - `cancelled`: Forwarding disabled
 
 ### 3. Lambda Functions
@@ -277,11 +277,11 @@ When a payment fails:
 
 1. **Stripe webhook** triggers (e.g., `invoice.payment_failed`)
 2. **Automation updates Airtable** record:
-   - Set `Status` to `lapsed`
-3. **Email forwarding continues** (status check looks for "active" but system is lenient)
+   - Set `Status` to `past_due`
+3. **Email forwarding continues** (Lambda's Airtable filter matches `active` or `past_due`)
 4. **Notification sent** to admin channel
 
-**Note**: Current implementation forwards emails regardless of status. If strict enforcement is needed, Lambda code can be modified to check status.
+If the subscription is later cancelled, set `Status` to `cancelled` (or any value other than `active`/`past_due`) to stop forwarding.
 
 ## Security Considerations
 
@@ -316,7 +316,7 @@ For 10-20 active aliases receiving ~50 emails/month each:
    - Check for Airtable API errors
 2. **Verify Airtable**:
    - Record exists for alias
-   - `Status` is `"active"`
+   - `Status` is `"active"` or `"past_due"`
    - `Email` field is populated
 3. **Check S3**: Verify email object exists in bucket
 4. **SES Receipt Rule**: Ensure rule set is active

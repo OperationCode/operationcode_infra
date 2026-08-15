@@ -104,6 +104,35 @@ class TestLambdaHandler(unittest.TestCase):
             self.assertEqual(result['Name'], 'Test User')
 
     @patch('handler.urllib.request.urlopen')
+    def test_lookup_alias_past_due(self, mock_urlopen):
+        """Test looking up a past_due alias in Airtable (still forwards)."""
+        with patch.object(handler, 'get_airtable_credentials', return_value={
+            'airtable_api_key': 'test_key',
+            'airtable_base_id': 'test_base',
+            'airtable_table_name': 'Email Aliases'
+        }):
+            mock_response = MagicMock()
+            mock_response.read.return_value = json.dumps({
+                'records': [{
+                    'id': 'rec124',
+                    'fields': {
+                        'Alias': 'testuser',
+                        'Email': 'test@example.com',
+                        'Name': 'Test User',
+                        'Status': 'past_due'
+                    }
+                }]
+            }).encode()
+            mock_response.__enter__.return_value = mock_response
+            mock_urlopen.return_value = mock_response
+
+            result = handler.lookup_alias_in_airtable('testuser')
+
+            self.assertIsNotNone(result)
+            self.assertEqual(result['Email'], 'test@example.com')
+            self.assertEqual(result['Name'], 'Test User')
+
+    @patch('handler.urllib.request.urlopen')
     def test_lookup_alias_not_found(self, mock_urlopen):
         """Test looking up a non-existent alias."""
         with patch.object(handler, 'get_airtable_credentials', return_value={

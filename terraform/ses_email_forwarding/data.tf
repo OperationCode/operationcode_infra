@@ -2,7 +2,7 @@
 data "archive_file" "lambda_zip" {
   type        = "zip"
   source_dir  = "${path.module}/../../lambda/ses_email_forwarder"
-  output_path = "${path.module}/lambda_function.zip"
+  output_path = "${path.module}/ses_email_forwarder.zip"
 
   excludes = [
     "tests",
