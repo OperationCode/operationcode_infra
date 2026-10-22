@@ -5,6 +5,17 @@ data "aws_ssm_parameter" "ecs_optimized_ami" {
   name = "/aws/service/ecs/optimized-ami/amazon-linux-2023/arm64/recommended"
 }
 
+# The provider marks SSM values as sensitive, but public AMI IDs are not secret
+locals {
+  ecs_ami    = nonsensitive(jsondecode(data.aws_ssm_parameter.ecs_optimized_ami.value))
+  ecs_ami_id = local.ecs_ami["image_id"]
+}
+
+output "ecs_ami_name" {
+  description = "ECS-optimized AMI name used by the autoscaling launch template"
+  value       = local.ecs_ami["image_name"]
+}
+
 # https://registry.terraform.io/modules/terraform-aws-modules/autoscaling/aws/latest
 module "autoscaling" {
   source  = "terraform-aws-modules/autoscaling/aws"
@@ -58,7 +69,7 @@ module "autoscaling" {
     # ]
   }
 
-  image_id                        = jsondecode(data.aws_ssm_parameter.ecs_optimized_ami.value)["image_id"]
+  image_id                        = local.ecs_ami_id
   user_data                       = base64encode(local.user_data)
   ignore_desired_capacity_changes = true
   key_name                        = "oc-ops"
