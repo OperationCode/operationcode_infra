@@ -16,6 +16,11 @@ output "ecs_ami_name" {
   value       = local.ecs_ami["image_name"]
 }
 
+output "admin_ssh_cidr" {
+  description = "CIDR allowed to SSH to the ECS instances"
+  value       = var.admin_ssh_cidr
+}
+
 # https://registry.terraform.io/modules/terraform-aws-modules/autoscaling/aws/latest
 module "autoscaling" {
   source  = "terraform-aws-modules/autoscaling/aws"
@@ -150,7 +155,7 @@ module "autoscaling_sg" {
   ingress_with_cidr_blocks = [
     {
       rule        = "ssh-tcp"
-      cidr_blocks = "71.237.173.68/32"
+      cidr_blocks = var.admin_ssh_cidr
     }
   ]
 
