@@ -25,13 +25,20 @@ resource "aws_route53_record" "apex_a" {
   records = ["76.76.21.21"]
 }
 
-# CA policy: restricts wildcard issuance to Amazon, reports to tech@
+# CA policy: restricts issuance to the CAs in use, reports to tech@
+# issue: amazon.com and amazontrust.com (ACM wildcard cert on the ALB: api, pybot, resources, api.staging)
+#        letsencrypt.org (Vercel certs for apex, www, storybook; renewals fail without it)
+# issuewild: Amazon only (the only wildcard cert is ACM; no Let's Encrypt wildcard is served)
+# Cloudways hosts (services family) serve a *.cloudwaysapps.com cert from SSL.com, not a cert for our names, so no CA is added for them
 resource "aws_route53_record" "apex_caa" {
   zone_id = aws_route53_zone.operationcode.zone_id
   name    = "operationcode.org"
   type    = "CAA"
   ttl     = 300
   records = [
+    "0 issue \"amazon.com\"",
+    "0 issue \"amazontrust.com\"",
+    "0 issue \"letsencrypt.org\"",
     "0 issuewild \"amazontrust.com\"",
     "0 issuewild \"amazon.com\"",
     "0 iodef \"mailto:tech@operationcode.org\"",
@@ -174,18 +181,13 @@ resource "aws_route53_record" "api_staging_aaaa" {
 # ======================================================================
 
 # Google Workspace mail
+# Replaced this zone's legacy ASPMX records with Google's current single MX on 2026-11-01. Google still supports the old values.
 resource "aws_route53_record" "apex_mx" {
   zone_id = aws_route53_zone.operationcode.zone_id
   name    = "operationcode.org"
   type    = "MX"
   ttl     = 3600
-  records = [
-    "1 ASPMX.L.GOOGLE.COM.",
-    "5 ALT1.ASPMX.L.GOOGLE.COM.",
-    "5 ALT2.ASPMX.L.GOOGLE.COM.",
-    "10 ALT3.ASPMX.L.GOOGLE.COM.",
-    "10 ALT4.ASPMX.L.GOOGLE.COM.",
-  ]
+  records = ["1 smtp.google.com."]
 }
 
 # SPF (Google, Mailgun, Mandrill) and Google site verification. Keep the Mandrill include (production mail uses it). INVESTIGATE: Mailgun include is unused by code, confirm with the Mailgun account
@@ -201,13 +203,14 @@ resource "aws_route53_record" "apex_txt" {
   ]
 }
 
-# DMARC policy for the apex domain (monitoring only, p=none)
+# DMARC policy for the apex domain (monitoring only, p=none, aggregate reports to tech@)
+# Next steps: enable Google DKIM, then move to p=quarantine, then p=reject
 resource "aws_route53_record" "apex_dmarc" {
   zone_id = aws_route53_zone.operationcode.zone_id
   name    = "_dmarc.operationcode.org"
   type    = "TXT"
-  ttl     = 60
-  records = ["v=DMARC1; p=none;"]
+  ttl     = 3600
+  records = ["v=DMARC1; p=none; rua=mailto:tech@operationcode.org"]
 }
 
 # ======================================================================
@@ -319,7 +322,7 @@ resource "aws_route53_record" "mailchimp_dkim_k2" {
   zone_id = aws_route53_zone.operationcode.zone_id
   name    = "k2._domainkey.operationcode.org"
   type    = "CNAME"
-  ttl     = 60
+  ttl     = 3600
   records = ["dkim2.mcsv.net"]
 }
 
@@ -328,7 +331,7 @@ resource "aws_route53_record" "mailchimp_dkim_k3" {
   zone_id = aws_route53_zone.operationcode.zone_id
   name    = "k3._domainkey.operationcode.org"
   type    = "CNAME"
-  ttl     = 60
+  ttl     = 3600
   records = ["dkim3.mcsv.net"]
 }
 
@@ -460,4 +463,29 @@ resource "aws_route53_record" "test" {
   type    = "CNAME"
   ttl     = 60
   records = ["services.operationcode.org."]
+}
+
+# ======================================================================
+# Null SPF for non-sending hosts
+# ======================================================================
+
+# v=spf1 -all on hosts with an address record, no other TXT, and no known mail sending.
+# Excluded: Cloudways and DigitalOcean hosts (out of scope), apex, coders.* (sends via SES), CNAME names (TXT cannot coexist), o1.notify (SendGrid sending IP)
+locals {
+  null_spf_hosts = toset([
+    "www",
+    "api",
+    "pybot",
+    "resources",
+    "api.staging",
+  ])
+}
+
+resource "aws_route53_record" "null_spf" {
+  for_each = local.null_spf_hosts
+  zone_id  = aws_route53_zone.operationcode.zone_id
+  name     = "${each.key}.operationcode.org"
+  type     = "TXT"
+  ttl      = 3600
+  records  = ["v=spf1 -all"]
 }
