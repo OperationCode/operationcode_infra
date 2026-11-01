@@ -83,24 +83,3 @@ resource "aws_route53_record" "net_dmarc_report_auth" {
   ttl     = 3600
   records = ["v=DMARC1"]
 }
-
-# ======================================================================
-# Imports (remove after the first successful apply)
-# The apex NS/SOA are managed by the zone itself and are not imported.
-# The stray operationcode.org.operationcode.net MX/SPF/TXT records are deleted by hand, not imported.
-# ======================================================================
-
-import {
-  to = aws_route53_zone.operationcode_net
-  id = "Z07670273N62ICN43WEHI"
-}
-
-import {
-  to = aws_route53_record.net_apex_a
-  id = "Z07670273N62ICN43WEHI_operationcode.net_A"
-}
-
-import {
-  to = aws_route53_record.net_www
-  id = "Z07670273N62ICN43WEHI_www.operationcode.net_CNAME"
-}
