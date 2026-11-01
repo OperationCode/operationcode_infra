@@ -188,7 +188,7 @@ resource "aws_route53_record" "apex_mx" {
   ]
 }
 
-# SPF (Google, Mailgun, Mandrill) and Google site verification. INVESTIGATE: trim SPF once live senders are confirmed
+# SPF (Google, Mailgun, Mandrill) and Google site verification. Keep the Mandrill include (production mail uses it). INVESTIGATE: Mailgun include is unused by code, confirm with the Mailgun account
 resource "aws_route53_record" "apex_txt" {
   zone_id = aws_route53_zone.operationcode.zone_id
   name    = "operationcode.org"
@@ -314,7 +314,7 @@ resource "aws_route53_record" "acm_validation_staging" {
 # Third-party mail senders (Mailchimp, Mandrill, SendGrid)
 # ======================================================================
 
-# Mailchimp DKIM. INVESTIGATE: confirm account is active
+# Mailchimp DKIM. Used by code (mailchimp3 in the back-end). INVESTIGATE: confirm the Mailchimp account is active
 resource "aws_route53_record" "mailchimp_dkim_k2" {
   zone_id = aws_route53_zone.operationcode.zone_id
   name    = "k2._domainkey.operationcode.org"
@@ -323,7 +323,7 @@ resource "aws_route53_record" "mailchimp_dkim_k2" {
   records = ["dkim2.mcsv.net"]
 }
 
-# Mailchimp DKIM. INVESTIGATE: confirm account is active
+# Mailchimp DKIM. Used by code (mailchimp3 in the back-end). INVESTIGATE: confirm the Mailchimp account is active
 resource "aws_route53_record" "mailchimp_dkim_k3" {
   zone_id = aws_route53_zone.operationcode.zone_id
   name    = "k3._domainkey.operationcode.org"
@@ -332,7 +332,7 @@ resource "aws_route53_record" "mailchimp_dkim_k3" {
   records = ["dkim3.mcsv.net"]
 }
 
-# Mandrill DKIM (1024-bit key). INVESTIGATE: confirm account is active
+# Mandrill DKIM (1024-bit key). Live: production Django mail sends through Mandrill. Keep
 resource "aws_route53_record" "mandrill_dkim" {
   zone_id = aws_route53_zone.operationcode.zone_id
   name    = "mandrill._domainkey.operationcode.org"
@@ -399,7 +399,7 @@ resource "aws_route53_record" "sendgrid_notify_o1" {
 # Legacy hosts (services, DigitalOcean, Cloudways)
 # ======================================================================
 
-# Old community host on DigitalOcean. INVESTIGATE: likely delete
+# DigitalOcean community host. INVESTIGATE: live server (SSH answers); find its owner before deletion.
 resource "aws_route53_record" "community_a" {
   zone_id = aws_route53_zone.operationcode.zone_id
   name    = "community.operationcode.org"
