@@ -98,25 +98,32 @@ resource "aws_route53_hosted_zone_dnssec" "operationcode" {
   depends_on = [aws_route53_key_signing_key.operationcode]
 }
 
-# Stage 2: DS record at the registrar (Route53 Domains, us-east-1). Keep commented out until:
-#   1. signing is verified: `aws route53 get-dnssec --hosted-zone-id <zone id>` shows SIGNING and the
-#      KSK ACTIVE, and `dig +dnssec operationcode.org SOA` returns RRSIG records
-#   2. the max TTL in the zone has passed since signing started (NS: 172800s = 48h; other records: 3600s)
-# Rollback order: remove the DS record first, wait for the DS TTL at the .org parent (and the
+# Stage 2: DS record at the registrar (Route53 Domains, us-east-1). This completes the DNSSEC
+# chain of trust from .org to this zone. Enabled 2026-11-03, after signing ran for 53 hours
+# (longer than the 48h apex NS TTL) and every checked RRset validated against KSK tag 23956.
+# Rollback order: remove this DS record first, wait for the DS TTL at the .org parent (and the
 # registrar change) to pass, then disable signing (aws_route53_hosted_zone_dnssec signing_status = "NOT_SIGNING").
-# Disabling signing while the DS record is live makes the domain fail resolution for validating resolvers.
-#
-# resource "aws_route53domains_delegation_signer_record" "operationcode" {
-#   provider    = aws.us_east_1
-#   domain_name = "operationcode.org"
-#
-#   signing_attributes {
-#     algorithm  = aws_route53_key_signing_key.operationcode.signing_algorithm_type
-#     flags      = aws_route53_key_signing_key.operationcode.flag
-#     public_key = aws_route53_key_signing_key.operationcode.public_key
-#   }
-# }
+# Disabling signing or deleting the KSK while the DS record is live makes the domain fail
+# resolution for validating resolvers.
+resource "aws_route53domains_delegation_signer_record" "operationcode" {
+  provider    = aws.us_east_1
+  domain_name = "operationcode.org"
 
+  signing_attributes {
+    algorithm  = aws_route53_key_signing_key.operationcode.signing_algorithm_type
+    flags      = aws_route53_key_signing_key.operationcode.flag
+    public_key = aws_route53_key_signing_key.operationcode.public_key
+  }
+
+  # The provider does not read signing_attributes back (import and refresh leave them empty),
+  # which would force a destroy/recreate of the live DS record. A KSK rotation needs a new DS
+  # record anyway, so ignore drift here and replace the DS deliberately during a rotation.
+  lifecycle {
+    ignore_changes = [signing_attributes]
+  }
+
+  depends_on = [aws_route53_hosted_zone_dnssec.operationcode]
+}
 # ======================================================================
 # Query logging
 # ======================================================================
