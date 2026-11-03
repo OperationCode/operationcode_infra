@@ -200,6 +200,8 @@ resource "aws_route53_record" "apex_txt" {
     "v=spf1 a include:_spf.google.com include:mailgun.org include:spf.mandrillapp.com ~all",
     "google-site-verification=XFeRZYknCzfwk5LTAuVDKf6T99S-DGafkhOfUlFXwFI",
     "google-site-verification=s2E7tZyPlszu8LHIcYlRT8s6oq6hSoGQ70gMXKP08aE",
+    # Google Workspace account recovery domain verification (2026-11)
+    "google-gws-recovery-domain-verification=77206819",
   ]
 }
 
