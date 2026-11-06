@@ -62,24 +62,11 @@ resource "aws_route53_record" "net_apex_mx" {
   records = ["0 ."]
 }
 
-# Strict DMARC: reject all spoofed mail, send aggregate reports to tech@
+# Strict DMARC: reject all spoofed mail, no aggregate reports
 resource "aws_route53_record" "net_dmarc" {
   zone_id = aws_route53_zone.operationcode_net.zone_id
   name    = "_dmarc.operationcode.net"
   type    = "TXT"
   ttl     = 3600
-  records = ["v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s; rua=mailto:tech@operationcode.org"]
-}
-
-# DMARC report authorization (RFC 7489 section 7.1)
-# The rua address is in operationcode.org, a different domain than the one being reported on.
-# Receivers only send reports there if the .org zone publishes this record.
-# It lives in this file (not dns_operationcode_org.tf) because it exists only to support the .net DMARC record.
-# It is created in the operationcode.org zone, so it uses that zone's id.
-resource "aws_route53_record" "net_dmarc_report_auth" {
-  zone_id = aws_route53_zone.operationcode.zone_id
-  name    = "operationcode.net._report._dmarc.operationcode.org"
-  type    = "TXT"
-  ttl     = 3600
-  records = ["v=DMARC1"]
+  records = ["v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s"]
 }
