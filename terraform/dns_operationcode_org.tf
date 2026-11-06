@@ -205,14 +205,18 @@ resource "aws_route53_record" "apex_txt" {
   ]
 }
 
-# DMARC policy for the apex domain (monitoring only, p=none, aggregate reports to tech@)
+# DMARC policy for the apex domain (monitoring only, p=none)
+# Aggregate reports go to Cloudflare DMARC Management (sponsored Cloudflare account, zone operationcode.org).
+# View them in the Cloudflare dashboard: Email > DMARC Management. The rua address comes from
+# `cf email-auth dmarc-reports get -z operationcode.org` (rua_prefix). Cloudflare publishes the
+# cross-domain report authorization record, so no _report._dmarc record is needed here.
 # Next steps: enable Google DKIM, then move to p=quarantine, then p=reject
 resource "aws_route53_record" "apex_dmarc" {
   zone_id = aws_route53_zone.operationcode.zone_id
   name    = "_dmarc.operationcode.org"
   type    = "TXT"
   ttl     = 3600
-  records = ["v=DMARC1; p=none; rua=mailto:tech@operationcode.org"]
+  records = ["v=DMARC1; p=none; rua=mailto:bdc9f1f573b64389b43f1a33b721a77d@dmarc-reports.cloudflare.net"]
 }
 
 # ======================================================================
