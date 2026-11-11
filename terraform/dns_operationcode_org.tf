@@ -202,6 +202,8 @@ resource "aws_route53_record" "apex_txt" {
     "google-site-verification=s2E7tZyPlszu8LHIcYlRT8s6oq6hSoGQ70gMXKP08aE",
     # Google Workspace account recovery domain verification (2026-11)
     "google-gws-recovery-domain-verification=77206819",
+    # Anthropic domain verification (2026-11)
+    "anthropic-domain-verification-4s4990=s6DNjBxo5MDUjwUVhZnVQ72XE",
   ]
 }
 
