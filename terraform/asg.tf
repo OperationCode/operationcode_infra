@@ -74,6 +74,17 @@ module "autoscaling" {
     # ]
   }
 
+  # A new AMI bumps the launch template version; roll instances onto it automatically
+  instance_refresh = {
+    strategy = "Rolling"
+    preferences = {
+      min_healthy_percentage = 100
+      max_healthy_percentage = 150
+      instance_warmup        = 300
+      skip_matching          = true
+    }
+  }
+
   image_id                        = local.ecs_ami_id
   user_data                       = base64encode(local.user_data)
   ignore_desired_capacity_changes = true
