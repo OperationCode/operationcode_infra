@@ -35,6 +35,16 @@ module "ecs" {
 
   cluster_name = local.name
 
+  # ECS Exec session logs go to the shared ECS log group
+  cluster_configuration = {
+    execute_command_configuration = {
+      logging = "OVERRIDE"
+      log_configuration = {
+        cloud_watch_log_group_name = aws_cloudwatch_log_group.ecslogs.name
+      }
+    }
+  }
+
   # disable container insights to save a bit of money
   cluster_settings = {
     name  = "containerInsights"

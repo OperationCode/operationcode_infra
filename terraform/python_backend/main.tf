@@ -26,6 +26,7 @@ locals {
 resource "aws_ecs_task_definition" "python_backend" {
   family             = "python_backend_${var.env}"
   execution_role_arn = var.task_execution_role
+  task_role_arn      = aws_iam_role.task.arn
   network_mode       = "bridge"
   cpu                = local.cpu
   memory             = local.memory
@@ -117,6 +118,8 @@ resource "aws_ecs_service" "python_backend" {
   task_definition = aws_ecs_task_definition.python_backend.arn
 
   desired_count = local.count
+
+  enable_execute_command = true
 
   deployment_maximum_percent         = 100
   deployment_minimum_healthy_percent = 0

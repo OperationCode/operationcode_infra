@@ -25,6 +25,7 @@ locals {
 resource "aws_ecs_task_definition" "pybot" {
   family             = "pybot_${var.env}"
   execution_role_arn = var.task_execution_role
+  task_role_arn      = aws_iam_role.task.arn
   network_mode       = "bridge"
   cpu                = local.cpu
   memory             = local.memory
@@ -73,6 +74,8 @@ resource "aws_ecs_service" "pybot" {
   task_definition = aws_ecs_task_definition.pybot.arn
 
   desired_count = local.count
+
+  enable_execute_command = true
 
   deployment_maximum_percent         = 100
   deployment_minimum_healthy_percent = 0

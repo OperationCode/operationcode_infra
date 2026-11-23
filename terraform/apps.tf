@@ -25,6 +25,7 @@ module "python_backend_prod" {
   env                 = "prod"
   vpc_id              = data.aws_vpc.use2.id
   logs_group          = aws_cloudwatch_log_group.ecslogs.name
+  logs_group_arn      = aws_cloudwatch_log_group.ecslogs.arn
   ecs_cluster_id      = module.ecs.cluster_id
   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
   image_tag           = "prod"
@@ -52,6 +53,7 @@ module "python_backend_staging" {
   env                 = "staging"
   vpc_id              = data.aws_vpc.use2.id
   logs_group          = aws_cloudwatch_log_group.ecslogs.name
+  logs_group_arn      = aws_cloudwatch_log_group.ecslogs.arn
   ecs_cluster_id      = module.ecs.cluster_id
   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
   image_tag           = "staging"
@@ -195,6 +197,7 @@ module "pybot_prod" {
   env                 = "prod"
   vpc_id              = data.aws_vpc.use2.id
   logs_group          = aws_cloudwatch_log_group.ecslogs.name
+  logs_group_arn      = aws_cloudwatch_log_group.ecslogs.arn
   ecs_cluster_id      = module.ecs.cluster_id
   task_execution_role = data.aws_iam_role.ecs_task_execution_role.arn
   image_tag           = "latest"
