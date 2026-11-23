@@ -29,3 +29,8 @@ variable "image_tag" {
   description = "The tag of the image to deploy"
   default     = "latest"
 }
+
+variable "logs_group_arn" {
+  type        = string
+  description = "The ARN of the log group (ECS Exec session logs)"
+}
